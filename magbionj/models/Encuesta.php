@@ -10,6 +10,7 @@ use Yii;
  * @property integer $id_encuesta
  * @property string $nombre_encuesta
  *
+ * @property EncuestaConEstudiante[] $encuestaConEstudiantes
  * @property PreguntaNumerica[] $preguntaNumericas
  * @property PreguntaTexto[] $preguntaTextos
  * @property SituacionConEncuesta[] $situacionConEncuestas
@@ -44,6 +45,14 @@ class Encuesta extends \yii\db\ActiveRecord
             'id_encuesta' => 'Id Encuesta',
             'nombre_encuesta' => 'Nombre Encuesta',
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getEncuestaConEstudiantes()
+    {
+        return $this->hasMany(EncuestaConEstudiante::className(), ['id_encuesta' => 'id_encuesta']);
     }
 
     /**

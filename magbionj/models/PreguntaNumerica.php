@@ -9,10 +9,10 @@ use Yii;
  *
  * @property integer $id_pregunta_numerica
  * @property string $pregunta
- * @property integer $respuesta
  * @property integer $encuestas_id_encuesta
  *
- * @property Encuestas $encuestasIdEncuesta
+ * @property Encuesta $encuestasIdEncuesta
+ * @property RespuestaNumerica[] $respuestaNumericas
  */
 class PreguntaNumerica extends \yii\db\ActiveRecord
 {
@@ -30,10 +30,10 @@ class PreguntaNumerica extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['pregunta', 'respuesta', 'encuestas_id_encuesta'], 'required'],
+            [['pregunta', 'encuestas_id_encuesta'], 'required'],
             [['pregunta'], 'string'],
-            [['respuesta', 'encuestas_id_encuesta'], 'integer'],
-            [['encuestas_id_encuesta'], 'exist', 'skipOnError' => true, 'targetClass' => Encuestas::className(), 'targetAttribute' => ['encuestas_id_encuesta' => 'id_encuesta']],
+            [['encuestas_id_encuesta'], 'integer'],
+            [['encuestas_id_encuesta'], 'exist', 'skipOnError' => true, 'targetClass' => Encuesta::className(), 'targetAttribute' => ['encuestas_id_encuesta' => 'id_encuesta']],
         ];
     }
 
@@ -45,7 +45,6 @@ class PreguntaNumerica extends \yii\db\ActiveRecord
         return [
             'id_pregunta_numerica' => 'Id Pregunta Numerica',
             'pregunta' => 'Pregunta',
-            'respuesta' => 'Respuesta',
             'encuestas_id_encuesta' => 'Encuestas Id Encuesta',
         ];
     }
@@ -55,6 +54,14 @@ class PreguntaNumerica extends \yii\db\ActiveRecord
      */
     public function getEncuestasIdEncuesta()
     {
-        return $this->hasOne(Encuestas::className(), ['id_encuesta' => 'encuestas_id_encuesta']);
+        return $this->hasOne(Encuesta::className(), ['id_encuesta' => 'encuestas_id_encuesta']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getRespuestaNumericas()
+    {
+        return $this->hasMany(RespuestaNumerica::className(), ['id_preguntanumerica' => 'id_pregunta_numerica']);
     }
 }
