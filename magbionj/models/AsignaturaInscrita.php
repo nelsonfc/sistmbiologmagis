@@ -34,8 +34,8 @@ class AsignaturaInscrita extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_asignatura_inscrita', 'calificacion', 'anio', 'semestre', 'estudiante_id_estudiante', 'asignatura_id_asignatura'], 'required'],
-            [['id_asignatura_inscrita', 'calificacion', 'anio', 'semestre', 'estudiante_id_estudiante', 'asignatura_id_asignatura'], 'integer'],
+            [['calificacion', 'anio', 'semestre', 'estudiante_id_estudiante', 'asignatura_id_asignatura'], 'required'],
+            [['calificacion', 'anio', 'semestre', 'estudiante_id_estudiante', 'asignatura_id_asignatura'], 'integer'],
             [['asignatura_id_asignatura'], 'exist', 'skipOnError' => true, 'targetClass' => Asignatura::className(), 'targetAttribute' => ['asignatura_id_asignatura' => 'id_asignatura']],
             [['estudiante_id_estudiante'], 'exist', 'skipOnError' => true, 'targetClass' => Estudiante::className(), 'targetAttribute' => ['estudiante_id_estudiante' => 'id_estudiante']],
         ];

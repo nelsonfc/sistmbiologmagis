@@ -33,8 +33,8 @@ class RevisorProfesorProyecto extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_revision', 'nota_oral', 'nota_escrita', 'nota_final', 'proyecto_tesis_id_proyecto', 'profesor_id_profesor'], 'required'],
-            [['id_revision', 'nota_oral', 'nota_escrita', 'nota_final', 'proyecto_tesis_id_proyecto', 'profesor_id_profesor'], 'integer'],
+            [['nota_oral', 'nota_escrita', 'nota_final', 'proyecto_tesis_id_proyecto', 'profesor_id_profesor'], 'required'],
+            [['nota_oral', 'nota_escrita', 'nota_final', 'proyecto_tesis_id_proyecto', 'profesor_id_profesor'], 'integer'],
             [['profesor_id_profesor'], 'exist', 'skipOnError' => true, 'targetClass' => Profesor::className(), 'targetAttribute' => ['profesor_id_profesor' => 'id_profesor']],
             [['proyecto_tesis_id_proyecto'], 'exist', 'skipOnError' => true, 'targetClass' => ProyectoTesis::className(), 'targetAttribute' => ['proyecto_tesis_id_proyecto' => 'id_proyecto']],
         ];

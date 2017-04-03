@@ -31,9 +31,9 @@ class EstudianteConTutor extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_estudiante_tutor', 'fecha', 'estudiante_id_estudiante', 'profesor_id_profesor'], 'required'],
-            [['id_estudiante_tutor', 'estudiante_id_estudiante', 'profesor_id_profesor'], 'integer'],
+            [['fecha', 'estudiante_id_estudiante', 'profesor_id_profesor'], 'required'],
             [['fecha'], 'safe'],
+            [['estudiante_id_estudiante', 'profesor_id_profesor'], 'integer'],
             [['estudiante_id_estudiante'], 'exist', 'skipOnError' => true, 'targetClass' => Estudiante::className(), 'targetAttribute' => ['estudiante_id_estudiante' => 'id_estudiante']],
             [['profesor_id_profesor'], 'exist', 'skipOnError' => true, 'targetClass' => Profesor::className(), 'targetAttribute' => ['profesor_id_profesor' => 'id_profesor']],
         ];

@@ -32,8 +32,8 @@ class AvanceProyecto extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_avance', 'porcentaje', 'fecha', 'proyecto_tesis_id_proyecto', 'tesis_id_tesis'], 'required'],
-            [['id_avance', 'porcentaje', 'proyecto_tesis_id_proyecto', 'tesis_id_tesis'], 'integer'],
+            [['porcentaje', 'fecha', 'proyecto_tesis_id_proyecto', 'tesis_id_tesis'], 'required'],
+            [['porcentaje', 'proyecto_tesis_id_proyecto', 'tesis_id_tesis'], 'integer'],
             [['fecha'], 'safe'],
             [['proyecto_tesis_id_proyecto'], 'exist', 'skipOnError' => true, 'targetClass' => ProyectoTesis::className(), 'targetAttribute' => ['proyecto_tesis_id_proyecto' => 'id_proyecto']],
             [['tesis_id_tesis'], 'exist', 'skipOnError' => true, 'targetClass' => Tesis::className(), 'targetAttribute' => ['tesis_id_tesis' => 'id_tesis']],

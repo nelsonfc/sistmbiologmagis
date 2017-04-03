@@ -30,9 +30,9 @@ class PreguntaNumerica extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_pregunta_numerica', 'pregunta', 'respuesta', 'encuestas_id_encuesta'], 'required'],
-            [['id_pregunta_numerica', 'respuesta', 'encuestas_id_encuesta'], 'integer'],
+            [['pregunta', 'respuesta', 'encuestas_id_encuesta'], 'required'],
             [['pregunta'], 'string'],
+            [['respuesta', 'encuestas_id_encuesta'], 'integer'],
             [['encuestas_id_encuesta'], 'exist', 'skipOnError' => true, 'targetClass' => Encuestas::className(), 'targetAttribute' => ['encuestas_id_encuesta' => 'id_encuesta']],
         ];
     }

@@ -30,8 +30,7 @@ class RevisorExterno extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_revisor', 'nombre', 'procedencia'], 'required'],
-            [['id_revisor'], 'integer'],
+            [['nombre', 'procedencia'], 'required'],
             [['nombre'], 'string', 'max' => 200],
             [['procedencia'], 'string', 'max' => 150],
         ];

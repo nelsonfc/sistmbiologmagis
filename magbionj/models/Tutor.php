@@ -30,8 +30,8 @@ class Tutor extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_tutor', 'rut', 'nombres', 'apellidos', 'telefono', 'correo'], 'required'],
-            [['id_tutor', 'telefono'], 'integer'],
+            [['rut', 'nombres', 'apellidos', 'telefono', 'correo'], 'required'],
+            [['telefono'], 'integer'],
             [['rut'], 'string', 'max' => 20],
             [['nombres', 'apellidos', 'correo'], 'string', 'max' => 150],
         ];

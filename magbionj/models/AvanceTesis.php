@@ -30,8 +30,8 @@ class AvanceTesis extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_avance', 'porcentaje', 'fecha', 'tesis_id_tesis'], 'required'],
-            [['id_avance', 'porcentaje', 'tesis_id_tesis'], 'integer'],
+            [['porcentaje', 'fecha', 'tesis_id_tesis'], 'required'],
+            [['porcentaje', 'tesis_id_tesis'], 'integer'],
             [['fecha'], 'safe'],
             [['tesis_id_tesis'], 'exist', 'skipOnError' => true, 'targetClass' => Tesis::className(), 'targetAttribute' => ['tesis_id_tesis' => 'id_tesis']],
         ];

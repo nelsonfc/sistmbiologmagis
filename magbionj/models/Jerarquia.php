@@ -5,22 +5,21 @@ namespace app\models;
 use Yii;
 
 /**
- * This is the model class for table "troncal".
+ * This is the model class for table "jerarquia".
  *
- * @property integer $id_troncal
+ * @property integer $id_jerarquia
  * @property string $nombre
  *
- * @property Estudiante[] $estudiantes
  * @property Profesor[] $profesors
  */
-class Troncal extends \yii\db\ActiveRecord
+class Jerarquia extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'troncal';
+        return 'jerarquia';
     }
 
     /**
@@ -40,7 +39,7 @@ class Troncal extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id_troncal' => 'Id Troncal',
+            'id_jerarquia' => 'Id Jerarquia',
             'nombre' => 'Nombre',
         ];
     }
@@ -48,16 +47,8 @@ class Troncal extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getEstudiantes()
-    {
-        return $this->hasMany(Estudiante::className(), ['troncal_id_troncal' => 'id_troncal']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
     public function getProfesors()
     {
-        return $this->hasMany(Profesor::className(), ['troncal_id_troncal' => 'id_troncal']);
+        return $this->hasMany(Profesor::className(), ['jerariquia_id_jerarquia' => 'id_jerarquia']);
     }
 }

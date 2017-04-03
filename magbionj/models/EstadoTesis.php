@@ -29,8 +29,7 @@ class EstadoTesis extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_estado', 'nombre'], 'required'],
-            [['id_estado'], 'integer'],
+            [['nombre'], 'required'],
             [['nombre'], 'string', 'max' => 150],
         ];
     }

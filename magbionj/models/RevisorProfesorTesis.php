@@ -33,8 +33,8 @@ class RevisorProfesorTesis extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_revision', 'nota_oral', 'nota_escrita', 'nota_final', 'profesor_id_profesor', 'tesis_id_tesis'], 'required'],
-            [['id_revision', 'nota_oral', 'nota_escrita', 'nota_final', 'profesor_id_profesor', 'tesis_id_tesis'], 'integer'],
+            [['nota_oral', 'nota_escrita', 'nota_final', 'profesor_id_profesor', 'tesis_id_tesis'], 'required'],
+            [['nota_oral', 'nota_escrita', 'nota_final', 'profesor_id_profesor', 'tesis_id_tesis'], 'integer'],
             [['profesor_id_profesor'], 'exist', 'skipOnError' => true, 'targetClass' => Profesor::className(), 'targetAttribute' => ['profesor_id_profesor' => 'id_profesor']],
             [['tesis_id_tesis'], 'exist', 'skipOnError' => true, 'targetClass' => Tesis::className(), 'targetAttribute' => ['tesis_id_tesis' => 'id_tesis']],
         ];

@@ -11,6 +11,7 @@ use Yii;
  * @property integer $proyecto_tesis_id_proyecto
  * @property integer $tipo_tutor_proyecto_id_tipo
  * @property integer $profesor_id_profesor
+ * @property string $fecha
  *
  * @property Profesor $profesorIdProfesor
  * @property ProyectoTesis $proyectoTesisIdProyecto
@@ -32,8 +33,9 @@ class ProyectoTutor extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_proyectotutor', 'proyecto_tesis_id_proyecto', 'tipo_tutor_proyecto_id_tipo', 'profesor_id_profesor'], 'required'],
-            [['id_proyectotutor', 'proyecto_tesis_id_proyecto', 'tipo_tutor_proyecto_id_tipo', 'profesor_id_profesor'], 'integer'],
+            [['proyecto_tesis_id_proyecto', 'tipo_tutor_proyecto_id_tipo', 'profesor_id_profesor', 'fecha'], 'required'],
+            [['proyecto_tesis_id_proyecto', 'tipo_tutor_proyecto_id_tipo', 'profesor_id_profesor'], 'integer'],
+            [['fecha'], 'safe'],
             [['profesor_id_profesor'], 'exist', 'skipOnError' => true, 'targetClass' => Profesor::className(), 'targetAttribute' => ['profesor_id_profesor' => 'id_profesor']],
             [['proyecto_tesis_id_proyecto'], 'exist', 'skipOnError' => true, 'targetClass' => ProyectoTesis::className(), 'targetAttribute' => ['proyecto_tesis_id_proyecto' => 'id_proyecto']],
             [['tipo_tutor_proyecto_id_tipo'], 'exist', 'skipOnError' => true, 'targetClass' => TipoTutorProyecto::className(), 'targetAttribute' => ['tipo_tutor_proyecto_id_tipo' => 'id_tipo']],
@@ -50,6 +52,7 @@ class ProyectoTutor extends \yii\db\ActiveRecord
             'proyecto_tesis_id_proyecto' => 'Proyecto Tesis Id Proyecto',
             'tipo_tutor_proyecto_id_tipo' => 'Tipo Tutor Proyecto Id Tipo',
             'profesor_id_profesor' => 'Profesor Id Profesor',
+            'fecha' => 'Fecha',
         ];
     }
 

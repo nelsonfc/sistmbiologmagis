@@ -31,8 +31,8 @@ class ProfesorConAsignatura extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_profesor_asignatura', 'cargo', 'asignatura_inscrita_id_asignatura_inscrita', 'profesor_id_profesor'], 'required'],
-            [['id_profesor_asignatura', 'cargo', 'asignatura_inscrita_id_asignatura_inscrita', 'profesor_id_profesor'], 'integer'],
+            [['cargo', 'asignatura_inscrita_id_asignatura_inscrita', 'profesor_id_profesor'], 'required'],
+            [['cargo', 'asignatura_inscrita_id_asignatura_inscrita', 'profesor_id_profesor'], 'integer'],
             [['asignatura_inscrita_id_asignatura_inscrita'], 'exist', 'skipOnError' => true, 'targetClass' => AsignaturaInscrita::className(), 'targetAttribute' => ['asignatura_inscrita_id_asignatura_inscrita' => 'id_asignatura_inscrita']],
             [['profesor_id_profesor'], 'exist', 'skipOnError' => true, 'targetClass' => Profesor::className(), 'targetAttribute' => ['profesor_id_profesor' => 'id_profesor']],
         ];

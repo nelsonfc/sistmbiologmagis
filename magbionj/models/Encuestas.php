@@ -30,8 +30,7 @@ class Encuestas extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_encuesta', 'nombre_encuesta'], 'required'],
-            [['id_encuesta'], 'integer'],
+            [['nombre_encuesta'], 'required'],
             [['nombre_encuesta'], 'string', 'max' => 100],
         ];
     }

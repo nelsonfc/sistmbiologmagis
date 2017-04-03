@@ -39,9 +39,9 @@ class Tesis extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_tesis', 'nombre_tesis', 'fecha_rendicion', 'nota_final', 'estado_tesis_id_estado', 'estudiante_id_estudiante'], 'required'],
-            [['id_tesis', 'nota_final', 'estado_tesis_id_estado', 'estudiante_id_estudiante'], 'integer'],
+            [['nombre_tesis', 'fecha_rendicion', 'nota_final', 'estado_tesis_id_estado', 'estudiante_id_estudiante'], 'required'],
             [['fecha_rendicion'], 'safe'],
+            [['nota_final', 'estado_tesis_id_estado', 'estudiante_id_estudiante'], 'integer'],
             [['nombre_tesis'], 'string', 'max' => 150],
             [['financiamiento'], 'string', 'max' => 160],
             [['estado_tesis_id_estado'], 'exist', 'skipOnError' => true, 'targetClass' => EstadoTesis::className(), 'targetAttribute' => ['estado_tesis_id_estado' => 'id_estado']],

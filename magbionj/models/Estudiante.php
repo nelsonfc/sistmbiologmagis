@@ -48,8 +48,8 @@ class Estudiante extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_estudiante', 'nombres', 'apellido_paterno', 'apellido_materno', 'telefono', 'movil', 'correo', 'direccion', 'anio_ingreso', 'procedencia', 'profesion', 'situacion_academica_id_situacion', 'troncal_id_troncal'], 'required'],
-            [['id_estudiante', 'telefono', 'movil', 'anio_ingreso', 'anio_egreso', 'situacion_academica_id_situacion', 'troncal_id_troncal'], 'integer'],
+            [['nombres', 'apellido_paterno', 'apellido_materno', 'telefono', 'movil', 'correo', 'direccion', 'anio_ingreso', 'procedencia', 'profesion', 'situacion_academica_id_situacion', 'troncal_id_troncal'], 'required'],
+            [['telefono', 'movil', 'anio_ingreso', 'anio_egreso', 'situacion_academica_id_situacion', 'troncal_id_troncal'], 'integer'],
             [['rut'], 'string', 'max' => 20],
             [['nombres', 'apellido_paterno', 'apellido_materno', 'profesion', 'direccion_extranjera'], 'string', 'max' => 100],
             [['correo', 'direccion'], 'string', 'max' => 150],

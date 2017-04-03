@@ -33,8 +33,8 @@ class RevisorExternoProyecto extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_revision', 'nota_oral', 'nota_escrita', 'nota_final', 'proyecto_tesis_id_proyecto', 'revisor_externo_id_revisor'], 'required'],
-            [['id_revision', 'nota_oral', 'nota_escrita', 'nota_final', 'proyecto_tesis_id_proyecto', 'revisor_externo_id_revisor'], 'integer'],
+            [['nota_oral', 'nota_escrita', 'nota_final', 'proyecto_tesis_id_proyecto', 'revisor_externo_id_revisor'], 'required'],
+            [['nota_oral', 'nota_escrita', 'nota_final', 'proyecto_tesis_id_proyecto', 'revisor_externo_id_revisor'], 'integer'],
             [['proyecto_tesis_id_proyecto'], 'exist', 'skipOnError' => true, 'targetClass' => ProyectoTesis::className(), 'targetAttribute' => ['proyecto_tesis_id_proyecto' => 'id_proyecto']],
             [['revisor_externo_id_revisor'], 'exist', 'skipOnError' => true, 'targetClass' => RevisorExterno::className(), 'targetAttribute' => ['revisor_externo_id_revisor' => 'id_revisor']],
         ];

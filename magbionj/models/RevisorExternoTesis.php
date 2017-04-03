@@ -33,8 +33,8 @@ class RevisorExternoTesis extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_revision', 'nota_oral', 'nota_escrita', 'nota_final', 'revisor_externo_id_revisor', 'tesis_id_tesis'], 'required'],
-            [['id_revision', 'nota_oral', 'nota_escrita', 'nota_final', 'revisor_externo_id_revisor', 'tesis_id_tesis'], 'integer'],
+            [['nota_oral', 'nota_escrita', 'nota_final', 'revisor_externo_id_revisor', 'tesis_id_tesis'], 'required'],
+            [['nota_oral', 'nota_escrita', 'nota_final', 'revisor_externo_id_revisor', 'tesis_id_tesis'], 'integer'],
             [['revisor_externo_id_revisor'], 'exist', 'skipOnError' => true, 'targetClass' => RevisorExterno::className(), 'targetAttribute' => ['revisor_externo_id_revisor' => 'id_revisor']],
             [['tesis_id_tesis'], 'exist', 'skipOnError' => true, 'targetClass' => Tesis::className(), 'targetAttribute' => ['tesis_id_tesis' => 'id_tesis']],
         ];

@@ -29,8 +29,7 @@ class TipoTutorProyecto extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_tipo', 'nombre'], 'required'],
-            [['id_tipo'], 'integer'],
+            [['nombre'], 'required'],
             [['nombre'], 'string', 'max' => 150],
         ];
     }

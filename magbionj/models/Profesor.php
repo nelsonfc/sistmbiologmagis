@@ -17,7 +17,7 @@ use Yii;
  * @property integer $jerariquia_id_jerarquia
  *
  * @property EstudianteConTutor[] $estudianteConTutors
- * @property Jerariquia $jerariquiaIdJerarquia
+ * @property Jerarquia $jerariquiaIdJerarquia
  * @property Troncal $troncalIdTroncal
  * @property ProfesorConAsignatura[] $profesorConAsignaturas
  * @property ProyectoTutor[] $proyectoTutors
@@ -41,11 +41,11 @@ class Profesor extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_profesor', 'rut', 'nombres', 'apellidos', 'telefono', 'correo', 'troncal_id_troncal', 'jerariquia_id_jerarquia'], 'required'],
-            [['id_profesor', 'telefono', 'troncal_id_troncal', 'jerariquia_id_jerarquia'], 'integer'],
+            [['rut', 'nombres', 'apellidos', 'telefono', 'correo', 'troncal_id_troncal', 'jerariquia_id_jerarquia'], 'required'],
+            [['telefono', 'troncal_id_troncal', 'jerariquia_id_jerarquia'], 'integer'],
             [['rut'], 'string', 'max' => 20],
             [['nombres', 'apellidos', 'correo'], 'string', 'max' => 150],
-            [['jerariquia_id_jerarquia'], 'exist', 'skipOnError' => true, 'targetClass' => Jerariquia::className(), 'targetAttribute' => ['jerariquia_id_jerarquia' => 'id_jerarquia']],
+            [['jerariquia_id_jerarquia'], 'exist', 'skipOnError' => true, 'targetClass' => Jerarquia::className(), 'targetAttribute' => ['jerariquia_id_jerarquia' => 'id_jerarquia']],
             [['troncal_id_troncal'], 'exist', 'skipOnError' => true, 'targetClass' => Troncal::className(), 'targetAttribute' => ['troncal_id_troncal' => 'id_troncal']],
         ];
     }
@@ -80,7 +80,7 @@ class Profesor extends \yii\db\ActiveRecord
      */
     public function getJerariquiaIdJerarquia()
     {
-        return $this->hasOne(Jerariquia::className(), ['id_jerarquia' => 'jerariquia_id_jerarquia']);
+        return $this->hasOne(Jerarquia::className(), ['id_jerarquia' => 'jerariquia_id_jerarquia']);
     }
 
     /**

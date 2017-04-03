@@ -29,8 +29,7 @@ class SituacionAcademica extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_situacion', 'nombre'], 'required'],
-            [['id_situacion'], 'integer'],
+            [['nombre'], 'required'],
             [['nombre'], 'string', 'max' => 100],
         ];
     }
