@@ -1,0 +1,40 @@
+<?php
+
+use yii\helpers\Html;
+use yii\widgets\DetailView;
+
+/* @var $this yii\web\View */
+/* @var $model app\models\RevisorExternoTesis */
+
+$this->title = $model->id_revision;
+$this->params['breadcrumbs'][] = ['label' => 'Revisor Externo Teses', 'url' => ['index']];
+$this->params['breadcrumbs'][] = $this->title;
+?>
+<div class="revisor-externo-tesis-view">
+
+    <h1><?= Html::encode($this->title) ?></h1>
+
+    <p>
+        <?= Html::a('Update', ['update', 'id' => $model->id_revision], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Delete', ['delete', 'id' => $model->id_revision], [
+            'class' => 'btn btn-danger',
+            'data' => [
+                'confirm' => 'Are you sure you want to delete this item?',
+                'method' => 'post',
+            ],
+        ]) ?>
+    </p>
+
+    <?= DetailView::widget([
+        'model' => $model,
+        'attributes' => [
+            'id_revision',
+            'nota_oral',
+            'nota_escrita',
+            'nota_final',
+            'revisor_externo_id_revisor',
+            'tesis_id_tesis',
+        ],
+    ]) ?>
+
+</div>
