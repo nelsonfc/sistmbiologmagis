@@ -19,6 +19,7 @@ class ProyectoTutorSearch extends ProyectoTutor
     {
         return [
             [['id_proyectotutor', 'proyecto_tesis_id_proyecto', 'tipo_tutor_proyecto_id_tipo', 'profesor_id_profesor'], 'integer'],
+            [['fecha'], 'safe'],
         ];
     }
 
@@ -62,6 +63,7 @@ class ProyectoTutorSearch extends ProyectoTutor
             'proyecto_tesis_id_proyecto' => $this->proyecto_tesis_id_proyecto,
             'tipo_tutor_proyecto_id_tipo' => $this->tipo_tutor_proyecto_id_tipo,
             'profesor_id_profesor' => $this->profesor_id_profesor,
+            'fecha' => $this->fecha,
         ]);
 
         return $dataProvider;

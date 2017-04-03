@@ -12,8 +12,6 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'id_revision')->textInput() ?>
-
     <?= $form->field($model, 'nota_oral')->textInput() ?>
 
     <?= $form->field($model, 'nota_escrita')->textInput() ?>

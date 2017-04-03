@@ -12,8 +12,6 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'id_tesis')->textInput() ?>
-
     <?= $form->field($model, 'nombre_tesis')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'financiamiento')->textInput(['maxlength' => true]) ?>

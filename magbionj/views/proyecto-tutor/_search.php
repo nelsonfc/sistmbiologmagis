@@ -23,6 +23,8 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'profesor_id_profesor') ?>
 
+    <?= $form->field($model, 'fecha') ?>
+
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
         <?= Html::resetButton('Reset', ['class' => 'btn btn-default']) ?>

@@ -5,12 +5,12 @@ namespace app\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\TesisTutor;
+use app\models\Jerarquia;
 
 /**
- * TesisTutorSearch represents the model behind the search form about `app\models\TesisTutor`.
+ * JerarquiaSearch represents the model behind the search form about `app\models\Jerarquia`.
  */
-class TesisTutorSearch extends TesisTutor
+class JerarquiaSearch extends Jerarquia
 {
     /**
      * @inheritdoc
@@ -18,7 +18,8 @@ class TesisTutorSearch extends TesisTutor
     public function rules()
     {
         return [
-            [['id_tesistutor', 'tipo_tutor_proyecto_id_tipo', 'tesis_id_tesis', 'profesor_id_profesor', 'fecha'], 'integer'],
+            [['id_jerarquia'], 'integer'],
+            [['nombre'], 'safe'],
         ];
     }
 
@@ -40,7 +41,7 @@ class TesisTutorSearch extends TesisTutor
      */
     public function search($params)
     {
-        $query = TesisTutor::find();
+        $query = Jerarquia::find();
 
         // add conditions that should always apply here
 
@@ -58,12 +59,10 @@ class TesisTutorSearch extends TesisTutor
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'id_tesistutor' => $this->id_tesistutor,
-            'tipo_tutor_proyecto_id_tipo' => $this->tipo_tutor_proyecto_id_tipo,
-            'tesis_id_tesis' => $this->tesis_id_tesis,
-            'profesor_id_profesor' => $this->profesor_id_profesor,
-            'fecha' => $this->fecha,
+            'id_jerarquia' => $this->id_jerarquia,
         ]);
+
+        $query->andFilterWhere(['like', 'nombre', $this->nombre]);
 
         return $dataProvider;
     }

@@ -12,8 +12,6 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'id_pregunta_numerica')->textInput() ?>
-
     <?= $form->field($model, 'pregunta')->textarea(['rows' => 6]) ?>
 
     <?= $form->field($model, 'respuesta')->textInput() ?>

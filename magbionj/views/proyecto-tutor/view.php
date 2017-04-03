@@ -32,6 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'proyecto_tesis_id_proyecto',
             'tipo_tutor_proyecto_id_tipo',
             'profesor_id_profesor',
+            'fecha',
         ],
     ]) ?>
 
