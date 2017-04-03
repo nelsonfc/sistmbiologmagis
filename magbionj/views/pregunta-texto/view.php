@@ -30,7 +30,6 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'id_pregunta_texto',
             'pregunta:ntext',
-            'respuesta:ntext',
             'encuestas_id_encuesta',
         ],
     ]) ?>

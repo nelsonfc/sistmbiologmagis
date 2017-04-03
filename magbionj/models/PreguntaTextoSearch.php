@@ -19,7 +19,7 @@ class PreguntaTextoSearch extends PreguntaTexto
     {
         return [
             [['id_pregunta_texto', 'encuestas_id_encuesta'], 'integer'],
-            [['pregunta', 'respuesta'], 'safe'],
+            [['pregunta'], 'safe'],
         ];
     }
 
@@ -63,8 +63,7 @@ class PreguntaTextoSearch extends PreguntaTexto
             'encuestas_id_encuesta' => $this->encuestas_id_encuesta,
         ]);
 
-        $query->andFilterWhere(['like', 'pregunta', $this->pregunta])
-            ->andFilterWhere(['like', 'respuesta', $this->respuesta]);
+        $query->andFilterWhere(['like', 'pregunta', $this->pregunta]);
 
         return $dataProvider;
     }

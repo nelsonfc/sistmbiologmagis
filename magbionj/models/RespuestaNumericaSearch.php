@@ -5,12 +5,12 @@ namespace app\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\PreguntaNumerica;
+use app\models\RespuestaNumerica;
 
 /**
- * PreguntaNumericaSearch represents the model behind the search form about `app\models\PreguntaNumerica`.
+ * RespuestaNumericaSearch represents the model behind the search form about `app\models\RespuestaNumerica`.
  */
-class PreguntaNumericaSearch extends PreguntaNumerica
+class RespuestaNumericaSearch extends RespuestaNumerica
 {
     /**
      * @inheritdoc
@@ -18,8 +18,7 @@ class PreguntaNumericaSearch extends PreguntaNumerica
     public function rules()
     {
         return [
-            [['id_pregunta_numerica', 'encuestas_id_encuesta'], 'integer'],
-            [['pregunta'], 'safe'],
+            [['id_respuestanumero', 'valor_respuesta', 'id_preguntanumerica', 'id_ece'], 'integer'],
         ];
     }
 
@@ -41,7 +40,7 @@ class PreguntaNumericaSearch extends PreguntaNumerica
      */
     public function search($params)
     {
-        $query = PreguntaNumerica::find();
+        $query = RespuestaNumerica::find();
 
         // add conditions that should always apply here
 
@@ -59,11 +58,11 @@ class PreguntaNumericaSearch extends PreguntaNumerica
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'id_pregunta_numerica' => $this->id_pregunta_numerica,
-            'encuestas_id_encuesta' => $this->encuestas_id_encuesta,
+            'id_respuestanumero' => $this->id_respuestanumero,
+            'valor_respuesta' => $this->valor_respuesta,
+            'id_preguntanumerica' => $this->id_preguntanumerica,
+            'id_ece' => $this->id_ece,
         ]);
-
-        $query->andFilterWhere(['like', 'pregunta', $this->pregunta]);
 
         return $dataProvider;
     }

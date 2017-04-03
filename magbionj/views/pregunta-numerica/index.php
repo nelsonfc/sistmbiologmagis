@@ -26,7 +26,6 @@ $this->params['breadcrumbs'][] = $this->title;
 
             'id_pregunta_numerica',
             'pregunta:ntext',
-            'respuesta',
             'encuestas_id_encuesta',
 
             ['class' => 'yii\grid\ActionColumn'],
