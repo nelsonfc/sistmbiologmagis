@@ -1,6 +1,12 @@
 <?php
 use yii\helpers\Html;
 
+if (\Yii::$app->user->isGuest) {
+
+    header('location: index.php?r=site%2Flogin');
+    die();
+
+}
 /* @var $this \yii\web\View */
 /* @var $content string */
 ?>
