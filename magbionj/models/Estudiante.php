@@ -67,22 +67,22 @@ class Estudiante extends \yii\db\ActiveRecord
     {
         return [
             'id_estudiante' => 'Id Estudiante',
-            'rut' => 'Rut',
+            'rut' => 'RUN',
             'nombres' => 'Nombres',
             'apellido_paterno' => 'Apellido Paterno',
             'apellido_materno' => 'Apellido Materno',
-            'telefono' => 'Telefono',
-            'movil' => 'Movil',
+            'telefono' => 'Teléfono',
+            'movil' => 'Móvil',
             'correo' => 'Correo',
-            'direccion' => 'Direccion',
-            'anio_ingreso' => 'Anio Ingreso',
-            'anio_egreso' => 'Anio Egreso',
-            'id_extranjero' => 'Id Extranjero',
+            'direccion' => 'Dirección',
+            'anio_ingreso' => 'Año Ingreso',
+            'anio_egreso' => 'Año Egreso',
+            'id_extranjero' => 'N° de Extranjero',
             'procedencia' => 'Procedencia',
-            'profesion' => 'Profesion',
-            'direccion_extranjera' => 'Direccion Extranjera',
-            'situacion_academica_id_situacion' => 'Situacion Academica Id Situacion',
-            'troncal_id_troncal' => 'Troncal Id Troncal',
+            'profesion' => 'Profesión',
+            'direccion_extranjera' => 'Dirección Extranjera',
+            'situacion_academica_id_situacion' => 'Situación Académica',
+            'troncal_id_troncal' => 'Troncal',
         ];
     }
 
@@ -110,6 +110,24 @@ class Estudiante extends \yii\db\ActiveRecord
         return $this->hasOne(Troncal::className(), ['id_troncal' => 'troncal_id_troncal']);
     }
 
+    public static function getListaTroncal() {
+        $opciones = Troncal::find()->asArray()->all();
+        return \yii\helpers\ArrayHelper::map($opciones, 'id_troncal', 'nombre');
+    }
+
+    public static function getListaSituacion() {
+        $opciones = SituacionAcademica::find()->asArray()->all();
+        return \yii\helpers\ArrayHelper::map($opciones, 'id_situacion', 'nombre');
+    }
+    public static function getListaAnios() {
+        $opciones = '';
+        $j = 0;
+        for($i = 2010 ; $i < date("Y")+1 ;$i++ ){
+            $opciones[$j]= ['id' => $i , 'nombre' => $i];
+            $j++;
+        }
+        return \yii\helpers\ArrayHelper::map($opciones, 'id', 'nombre');
+    }
     /**
      * @return \yii\db\ActiveQuery
      */

@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\User;
 use Yii;
 use app\models\Estudiante;
 use app\models\EstudianteSearch;
@@ -64,9 +65,27 @@ class EstudianteController extends Controller
     public function actionCreate()
     {
         $model = new Estudiante();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id_estudiante]);
+        $model->anio_ingreso = date("Y");
+        $model->situacion_academica_id_situacion = 1;
+        if ($model->load(Yii::$app->request->post())) {
+            $user = new User();
+            if($model->rut != null){
+                $rut = explode(".", $model->rut);
+                $user->username = $rut[0] . $rut[1] . $rut[2];
+            }else{
+                $user->username = $model->id_extranjero;
+            }
+            $user->nombre = $model->nombres.' '.$model->apellido_paterno.' '.$model->apellido_materno;
+            $user->setPassword('123456');
+            $user->email = $model->correo;
+            $user->rol = 2;
+            $user->estado_clave =1;
+            $user->estado = 0;
+            $user->generateAuthKey();
+            $user->save();
+            $model->id_user = $user->id;
+            $model->save();
+            return $this->redirect(['index']);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -84,8 +103,20 @@ class EstudianteController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id_estudiante]);
+        if ($model->load(Yii::$app->request->post())) {
+            $user = User::findOne($model->id_user);
+            if($model->rut != null){
+                $rut = explode(".", $model->rut);
+                $user->username = $rut[0] . $rut[1] . $rut[2];
+                $model->rut = $rut[0] . $rut[1] . $rut[2];
+            }else{
+                $user->username = $model->id_extranjero;
+            }
+            $user->nombre = $model->nombres.' '.$model->apellido_paterno.' '.$model->apellido_materno;
+            $user->email = $model->correo;
+            $user->save();
+            $model->save();
+            return $this->redirect(['index']);
         } else {
             return $this->render('update', [
                 'model' => $model,
