@@ -42,13 +42,15 @@ class LoginForm extends Model
      * @param string $attribute the attribute currently being validated
      * @param array $params the additional name-value pairs given in the rule
      */
-    public function validatePassword($attribute, $params)
-    {
+    public function validatePassword($attribute, $params) {
         if (!$this->hasErrors()) {
             $user = $this->getUser();
-
             if (!$user || !$user->validatePassword($this->password)) {
-                $this->addError($attribute, 'Incorrect username or password.');
+                $this->addError($attribute, 'RUT y/o Clave incorrectos.');
+            }else{
+                if($user->estado == 1){
+                    $this->addError($attribute, 'Error: No Tiene Privilegios para Acceder');
+                }
             }
         }
     }
@@ -70,12 +72,14 @@ class LoginForm extends Model
      *
      * @return User|null
      */
-    public function getUser()
-    {
-        if ($this->_user === false) {
+    protected function getUser() {
+        $rut = explode(".", $this->username);
+        if (count($rut) > 2) {
+            $rut_sin_puntos = $rut[0] . $rut[1] . $rut[2];
+            $this->_user = User::findByUsername($rut_sin_puntos);
+        } else {
             $this->_user = User::findByUsername($this->username);
         }
-
         return $this->_user;
     }
 }
