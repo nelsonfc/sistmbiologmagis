@@ -11,7 +11,11 @@ use yii\widgets\ActiveForm;
 <div class="estudiante-form">
 
     <?php $form = ActiveForm::begin(); ?>
+    <div>
+        <div>
 
+        </div>
+    </div>
     <?= $form->field($model, 'rut')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'nombres')->textInput(['maxlength' => true]) ?>
