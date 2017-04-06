@@ -52,7 +52,7 @@ class EstudianteController extends Controller
      */
     public function actionView($id)
     {
-        return $this->render('view', [
+        return $this->renderAjax('view', [
             'model' => $this->findModel($id),
         ]);
     }
@@ -67,11 +67,13 @@ class EstudianteController extends Controller
         $model = new Estudiante();
         $model->anio_ingreso = date("Y");
         $model->situacion_academica_id_situacion = 1;
-        if ($model->load(Yii::$app->request->post())) {
+        if (Yii::$app->request->isAjax  && $model->load(Yii::$app->request->post())) {
+            \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
             $user = new User();
             if($model->rut != null){
                 $rut = explode(".", $model->rut);
                 $user->username = $rut[0] . $rut[1] . $rut[2];
+                $model->rut = $rut[0] . $rut[1] . $rut[2];
             }else{
                 $user->username = $model->id_extranjero;
             }
@@ -84,10 +86,9 @@ class EstudianteController extends Controller
             $user->generateAuthKey();
             $user->save();
             $model->id_user = $user->id;
-            $model->save();
-            return $this->redirect(['index']);
+            return ['success' => $model->save()];
         } else {
-            return $this->render('create', [
+            return $this->renderAjax('create', [
                 'model' => $model,
             ]);
         }
@@ -103,7 +104,8 @@ class EstudianteController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post())) {
+        if (Yii::$app->request->isAjax  && $model->load(Yii::$app->request->post())) {
+            \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
             $user = User::findOne($model->id_user);
             if($model->rut != null){
                 $rut = explode(".", $model->rut);
@@ -115,10 +117,9 @@ class EstudianteController extends Controller
             $user->nombre = $model->nombres.' '.$model->apellido_paterno.' '.$model->apellido_materno;
             $user->email = $model->correo;
             $user->save();
-            $model->save();
-            return $this->redirect(['index']);
+            return ['success' => $model->save()];
         } else {
-            return $this->render('update', [
+            return $this->renderAjax('update', [
                 'model' => $model,
             ]);
         }

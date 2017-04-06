@@ -18,9 +18,9 @@ class AppAsset extends AssetBundle
     public $basePath = '@webroot';
     public $baseUrl = '@web';
     public $css = [
-        'css/site.css',
+        'css/site.css','sweetalert-master/dist/sweetalert.css', 'css/colorbox.css'
     ];
-    public $js = [
+    public $js = ['js/main.js', 'bootstrap-notify-master/bootstrap-notify.min.js', 'bootstrap-notify-master/bootstrap-notify.js'
     ];
     public $depends = [
         'yii\web\YiiAsset',

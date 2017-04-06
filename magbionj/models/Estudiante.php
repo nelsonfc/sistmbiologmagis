@@ -51,6 +51,7 @@ class Estudiante extends \yii\db\ActiveRecord
             [['nombres', 'apellido_paterno', 'apellido_materno', 'telefono', 'movil', 'correo', 'direccion', 'anio_ingreso', 'procedencia', 'profesion', 'situacion_academica_id_situacion', 'troncal_id_troncal'], 'required'],
             [['telefono', 'movil', 'anio_ingreso', 'anio_egreso', 'situacion_academica_id_situacion', 'troncal_id_troncal'], 'integer'],
             [['rut'], 'string', 'max' => 20],
+            [['rut'], 'unique'],
             [['nombres', 'apellido_paterno', 'apellido_materno', 'profesion', 'direccion_extranjera'], 'string', 'max' => 100],
             [['correo', 'direccion'], 'string', 'max' => 150],
             [['id_extranjero'], 'string', 'max' => 50],

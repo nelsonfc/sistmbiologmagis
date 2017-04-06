@@ -4,17 +4,48 @@ use yii\helpers\Html;
 use kartik\grid\GridView;
 use app\models\SituacionAcademica;
 use app\models\Troncal;
+use yii\bootstrap\Modal;
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\EstudianteSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = '';
+Modal::begin([
+    'header' => '<h4 class="modal-title">Modificar Estudiante</h4>',
+    'id' => 'modaleditar',
+    'class' => 'modal',
+    'closeButton' => ['onclick' => "$('div').removeClass('modal-backdrop fade in');"],
+    'size' => 'modal-lg',
+]);
+echo "<div class='modalContent'></div>";
+
+Modal::end();
+Modal::begin([
+    'id' => 'modalver',
+    'class' => 'modal',
+    'closeButton' => false,
+    'size' => 'modal-lg',
+]);
+echo "<div class='modalContent'></div>";
+
+Modal::end();
+Modal::begin([
+    'id' => 'modalingresar',
+    'header' => '<h4 class="modal-title">Agregar Estudiante</h4>',
+    'class' => 'modal',
+    'closeButton' => ['onclick' => "$('div').removeClass('modal-backdrop fade in');"],
+    'size' => 'modal-lg'
+]);
+echo "<div class='modalContent'></div>";
+
+Modal::end();
 ?>
 <div class="estudiante-index">
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <?php
+    \yii\widgets\Pjax::begin(['id' => 'refrescar']);
     $titulo = "ESTUDIANTES";
     $modelo = new \app\models\Estudiante();
     $gridColumns = [
@@ -72,7 +103,21 @@ $this->title = '';
             ],
         ],
 
-        ['class' => 'kartik\grid\ActionColumn'],];
+        ['class' => 'kartik\grid\ActionColumn',
+            'template' => '{view}{update}',
+            'buttons' => [
+                'view' => function ($url, $model) {
+                    return Html::a(Yii::t('app', '<span class="glyphicon glyphicon-eye-open"></span>&nbsp'), $url, ['class' => 'modalButton2']);
+                },
+                'update' => function ($url, $model) {
+                    return Html::a(Yii::t('app', '<span class="glyphicon glyphicon-pencil"></span>'), $url, ['class' => 'modalButton']);
+                    /* Html::a('<span class="glyphicon glyphicon-pencil"></span>', $url, [
+                      'id' => 'modalButton','title' => Yii::t('yii', 'Modificar'), 'data-toggle' => 'modal',
+                      'data-target' => '#modaleditardocente', 'url' => 'javascript:void(0);'
+                      ]); */
+                }
+            ]
+        ],];
     echo GridView::widget([
         'id' => 'kv-grid-demo',
         'dataProvider'=>$dataProvider,
@@ -84,8 +129,7 @@ $this->title = '';
         'pjax'=>true, // pjax is set to always true for this demo
         // set your toolbar
         'toolbar'=> [
-            ['content'=>
-                Html::a('<i class="fa fa-plus"></i>', ['create'], ['class' => 'btn btn-success'])
+            ['content' => Html::a(Yii::t('app', '<i class="glyphicon glyphicon-plus"></i>'), ['create'], ['class' => 'btn btn-primary modalButton3'])
             ],
             '{export}',
             '{toggleData}',
@@ -102,5 +146,61 @@ $this->title = '';
         ],
         'persistResize'=>false,
     ]);
+    \yii\widgets\Pjax::end();
    ?>
 </div>
+<?php
+$this->registerJs('$(document).on("ready pjax:success", function() {
+    $(".modal").removeAttr("tabindex");
+    $(".modalButton").click(function(){
+        $("#kvFileinputModal").empty();
+        $("#kvFileinputModal").removeClass("modal-backdrop fade in");
+       var tagname = $(this)[0].tagName;      
+       $("#modaleditar").modal("show")
+                  .find(".modalContent")
+                  .load($(this).attr("href"));
+       return false;   
+   });
+});')
+
+;
+?>
+<?php
+$this->registerJs('$(document).on("ready pjax:success", function() {
+    $(".modal").removeAttr("tabindex");
+    $(".modalButton2").click(function(){
+        $("#kvFileinputModal").empty();
+        $("#kvFileinputModal").removeClass("modal-backdrop fade in");
+       var tagname = $(this)[0].tagName;      
+       $("#modalver").modal("show")
+                  .find(".modalContent")
+                  .load($(this).attr("href"));
+       return false;   
+   });
+});')
+
+;
+?>
+<?php
+$this->registerJs('$(document).on("ready pjax:success", function() {
+   $(".modal").removeAttr("tabindex");
+    $(".modalButton3").click(function(){
+    
+        $("#kvFileinputModal").empty();
+        $("#kvFileinputModal").removeClass("modal-backdrop fade in");
+       var tagname = $(this)[0].tagName;      
+       $("#modalingresar").modal("show")
+                  .find(".modalContent")
+                  .load($(this).attr("href"));
+       return false;   
+   });
+});')
+
+;
+?>
+<?php
+function getPuntosRut( $rut ){
+    $rutTmp = explode( "-", $rut );
+    return number_format( $rutTmp[0], 0, "", ".") . '-' . $rutTmp[1];
+}
+?>
