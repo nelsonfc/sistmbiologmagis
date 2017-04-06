@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use Yii;
+use app\models\User;
 use app\models\Profesor;
 use app\models\ProfesorSearch;
 use yii\web\Controller;
@@ -51,7 +52,7 @@ class ProfesorController extends Controller
      */
     public function actionView($id)
     {
-        return $this->render('view', [
+        return $this->renderAjax('view', [
             'model' => $this->findModel($id),
         ]);
     }
@@ -65,10 +66,25 @@ class ProfesorController extends Controller
     {
         $model = new Profesor();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id_profesor]);
+        if (Yii::$app->request->isAjax  && $model->load(Yii::$app->request->post())) {
+            \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+            $user = new User();
+            $rut = explode(".", $model->rut);
+            $user->username = $rut[0] . $rut[1] . $rut[2];
+            $model->rut = $rut[0] . $rut[1] . $rut[2];
+            $user->nombre = $model->nombres.' '.$model->apellidos;
+            $user->setPassword('123456');
+            $user->email = $model->correo;
+            $user->rol = 3;
+            $user->estado_clave =1;
+            $user->estado = 0;
+            $user->nombre_rol = "Profesor";
+            $user->generateAuthKey();
+            $user->save();
+            $model->id_user = $user->id;
+            return ['success' => $model->save()];
         } else {
-            return $this->render('create', [
+            return $this->renderAjax('create', [
                 'model' => $model,
             ]);
         }
@@ -84,10 +100,18 @@ class ProfesorController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id_profesor]);
+        if (Yii::$app->request->isAjax  && $model->load(Yii::$app->request->post())) {
+            \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+            $user = User::findOne($model->id_user);
+            $rut = explode(".", $model->rut);
+            $user->username = $rut[0] . $rut[1] . $rut[2];
+            $model->rut = $rut[0] . $rut[1] . $rut[2];
+            $user->nombre = $model->nombres.' '.$model->apellidos;
+            $user->email = $model->correo;
+            $user->save();
+            return ['success' => $model->save()];
         } else {
-            return $this->render('update', [
+            return $this->renderAjax('update', [
                 'model' => $model,
             ]);
         }

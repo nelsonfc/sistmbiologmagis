@@ -44,6 +44,7 @@ class Profesor extends \yii\db\ActiveRecord
             [['rut', 'nombres', 'apellidos', 'telefono', 'correo', 'troncal_id_troncal', 'jerariquia_id_jerarquia'], 'required'],
             [['telefono', 'troncal_id_troncal', 'jerariquia_id_jerarquia'], 'integer'],
             [['rut'], 'string', 'max' => 20],
+            [['rut'], 'unique'],
             [['nombres', 'apellidos', 'correo'], 'string', 'max' => 150],
             [['jerariquia_id_jerarquia'], 'exist', 'skipOnError' => true, 'targetClass' => Jerarquia::className(), 'targetAttribute' => ['jerariquia_id_jerarquia' => 'id_jerarquia']],
             [['troncal_id_troncal'], 'exist', 'skipOnError' => true, 'targetClass' => Troncal::className(), 'targetAttribute' => ['troncal_id_troncal' => 'id_troncal']],
@@ -57,13 +58,13 @@ class Profesor extends \yii\db\ActiveRecord
     {
         return [
             'id_profesor' => 'Id Profesor',
-            'rut' => 'Rut',
+            'rut' => 'RUN',
             'nombres' => 'Nombres',
             'apellidos' => 'Apellidos',
-            'telefono' => 'Telefono',
+            'telefono' => 'Teléfono',
             'correo' => 'Correo',
-            'troncal_id_troncal' => 'Troncal Id Troncal',
-            'jerariquia_id_jerarquia' => 'Jerariquia Id Jerarquia',
+            'troncal_id_troncal' => 'Troncal',
+            'jerariquia_id_jerarquia' => 'Jerarquía',
         ];
     }
 
@@ -106,6 +107,17 @@ class Profesor extends \yii\db\ActiveRecord
     {
         return $this->hasMany(ProyectoTutor::className(), ['profesor_id_profesor' => 'id_profesor']);
     }
+
+    public static function getListaTroncal() {
+        $opciones = Troncal::find()->asArray()->all();
+        return \yii\helpers\ArrayHelper::map($opciones, 'id_troncal', 'nombre');
+    }
+
+    public static function getListaJerarquia() {
+        $opciones = Jerarquia::find()->asArray()->all();
+        return \yii\helpers\ArrayHelper::map($opciones, 'id_jerarquia', 'nombre');
+    }
+
 
     /**
      * @return \yii\db\ActiveQuery

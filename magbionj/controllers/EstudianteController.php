@@ -83,6 +83,7 @@ class EstudianteController extends Controller
             $user->rol = 2;
             $user->estado_clave =1;
             $user->estado = 0;
+            $user->nombre_rol = "Estudiante";
             $user->generateAuthKey();
             $user->save();
             $model->id_user = $user->id;
