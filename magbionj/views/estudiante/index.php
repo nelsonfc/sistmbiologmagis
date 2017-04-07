@@ -45,12 +45,16 @@ Modal::end();
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <?php
+    setlocale(LC_TIME, 'spanish');
+    date_default_timezone_set("America/Santiago");
+    $fecha = utf8_encode(strftime("%d de %B de %Y"));
     \yii\widgets\Pjax::begin(['id' => 'refrescar']);
     $titulo = "ESTUDIANTES";
     $modelo = new \app\models\Estudiante();
     $gridColumns = [
         //'id_estudiante',
-        'rut',
+        ['attribute' => 'rut', 'width' => '25%'],
+        'id_extranjero',
         'nombres',
         'apellido_paterno',
         'apellido_materno',
@@ -134,9 +138,31 @@ Modal::end();
             '{export}',
             '{toggleData}',
         ],
-        // set export properties
-        'export'=>[
-            'fontAwesome'=>true
+        'export' => [
+            'fontAwesome' => true
+        ],
+        'exportConfig' => [
+            GridView::EXCEL => [],
+            GridView::PDF => [
+                'config' => [
+                    'cssInline' => '.kv-heading-1{font-size:16px}',
+                    'marginTop' => '30',
+                    'cssFile' => '@vendor/kartik-v/yii2-mpdf/assets/kv-mpdf-bootstrap.min.css',
+                    'methods' => [
+                        'SetHeader'=>['<img style="width: 168px;
+    height: 47px; float:left;" src="imagenes/ubb.png"/>|Estudiantes|<img style="float:right;width: 168px;
+    height: 47px;" src="imagenes/logo.png"/>'],
+
+                        'SetFooter'=>['Generado el ' . utf8_encode($fecha).'|Página {PAGENO}| Empresas Piedra'],
+                    ],
+                    'options' => [
+                        'title' => 'Estudiantes',
+                        'subject' => 'PDF Document Subject',
+                        'keywords' => 'krajee, grid, export, yii2-grid, pdf'
+
+                    ]
+                ]
+            ],
         ],
         // parameters from the demo form
 

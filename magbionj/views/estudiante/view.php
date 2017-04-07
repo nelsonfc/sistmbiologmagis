@@ -23,53 +23,59 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
         <div class="box-body">
             <div class="row" style="    margin-bottom: 8px;">
-                <div class="col-md-2" style="color: #478fca!important;">
+                <div class="col-md-3" style="color: #478fca!important;">
                     RUN
                 </div>
-                <div class="col-md-3">
-                    <?php echo getPuntosRut($model->rut); ?>
+                <div class="col-md-4">
+                    <?php if($model->rut != null && $model->rut != ""){ echo getPuntosRut($model->rut); }else{ echo ("(No Posee)");}?>
                 </div>
+                <div class="col-md-2" style="color: #478fca!important;">
+                    ID Extranjero
+                </div>
+                <div class="col-md-3">
+                    <?php if($model->id_extranjero != null || $model->id_extranjero != ''){echo $model->id_extranjero;}else{ echo "(No Registra)"; } ?>
+                </div>
+            </div>
+            <div class="row" style="    margin-bottom: 8px;">
                 <div class="col-md-3" style="color: #478fca!important;">
                     Nombre
                 </div>
                 <div class="col-md-4">
                     <?php echo $model->nombres." ".$model->apellido_paterno." ".$model->apellido_materno; ?>
                 </div>
-            </div>
-            <div class="row" style="    margin-bottom: 8px;">
-                <div class="col-md-2" style="color: #478fca!important;">
-                    Dirección
-                </div>
-                <div class="col-md-3">
-                    <?php echo $model->direccion; ?>
-                </div>
-                <div class="col-md-3" style="color: #478fca!important;">
-                    Dirección Extranjera
-                </div>
-                <div class="col-md-4">
-                    <?php echo $model->direccion_extranjera; ?>
-                </div>
-            </div>
-            <div class="row" style="    margin-bottom: 8px;">
-                <div class="col-md-2" style="color: #478fca!important;">
-                    Teléfono
-                </div>
-                <div class="col-md-3">
-                    <?php echo $model->telefono; ?>
-                </div>
-                <div class="col-md-3" style="color: #478fca!important;">
-                    Celular
-                </div>
-                <div class="col-md-4">
-                    <?php echo $model->movil; ?>
-                </div>
-            </div>
-            <div class="row" style="    margin-bottom: 8px;">
                 <div class="col-md-2" style="color: #478fca!important;">
                     Correo
                 </div>
                 <div class="col-md-3">
                     <?php echo $model->correo; ?>
+                </div>
+            </div>
+            <div class="row" style="    margin-bottom: 8px;">
+                <div class="col-md-3" style="color: #478fca!important;">
+                    Teléfono
+                </div>
+                <div class="col-md-4">
+                    <?php echo $model->telefono; ?>
+                </div>
+                <div class="col-md-2" style="color: #478fca!important;">
+                    Celular
+                </div>
+                <div class="col-md-3">
+                    <?php echo $model->movil; ?>
+                </div>
+            </div>
+            <div class="row" style="    margin-bottom: 8px;">
+                <div class="col-md-3" style="color: #478fca!important;">
+                    Dirección
+                </div>
+                <div class="col-md-4">
+                    <?php echo $model->direccion; ?>
+                </div>
+                <div class="col-md-2" style="color: #478fca!important;">
+                    Dirección Extranjera
+                </div>
+                <div class="col-md-3">
+                    <?php if($model->direccion_extranjera != null || $model->direccion_extranjera != ''){echo $model->direccion_extranjera;}else{ echo "(No Registra)"; } ?>
                 </div>
             </div>
         </div>
@@ -80,39 +86,39 @@ $this->params['breadcrumbs'][] = $this->title;
 
         <div class="box-body">
             <div class="row" style="    margin-bottom: 8px;">
-                <div class="col-md-2" style="color: #478fca!important;">
+                <div class="col-md-3" style="color: #478fca!important;">
                     Procedencia
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <?php echo $model->procedencia; ?>
                 </div>
-                <div class="col-md-3" style="color: #478fca!important;">
+                <div class="col-md-2" style="color: #478fca!important;">
                     Profesión
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <?php echo $model->profesion; ?>
                 </div>
             </div>
             <div class="row" style="    margin-bottom: 8px;">
-                <div class="col-md-2" style="color: #478fca!important;">
+                <div class="col-md-3" style="color: #478fca!important;">
                    Troncal
                 </div>
-                <div class="col-md-3" >
+                <div class="col-md-4" >
                     <?php echo \app\models\Troncal::findOne($model->troncal_id_troncal)->nombre; ?>
 
                 </div>
-                <div class="col-md-3" style="color: #478fca!important;">
+                <div class="col-md-2" style="color: #478fca!important;">
                     Año de Ingreso
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <?php echo $model->anio_ingreso ?>
                 </div>
             </div>
             <div class="row" style="    margin-bottom: 8px;">
-                <div class="col-md-2" style="color: #478fca!important;">
+                <div class="col-md-3" style="color: #478fca!important;">
                     Situación
                 </div>
-                <div class="col-md-3" >
+                <div class="col-md-4" >
                     <?php echo \app\models\SituacionAcademica::findOne($model->situacion_academica_id_situacion)->nombre; ?>
                 </div>
 

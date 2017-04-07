@@ -32,6 +32,7 @@ class Asignatura extends \yii\db\ActiveRecord
         return [
             [['nombre', 'codigo', 'tipo'], 'required'],
             [['tipo'], 'integer'],
+            [['codigo'], 'unique'],
             [['nombre'], 'string', 'max' => 200],
             [['codigo'], 'string', 'max' => 50],
         ];
@@ -46,7 +47,7 @@ class Asignatura extends \yii\db\ActiveRecord
             'id_asignatura' => 'Id Asignatura',
             'nombre' => 'Nombre',
             'codigo' => 'Codigo',
-            'tipo' => 'Tipo',
+            'tipo' => 'Tipo de Asignatura',
         ];
     }
 
@@ -57,4 +58,11 @@ class Asignatura extends \yii\db\ActiveRecord
     {
         return $this->hasMany(AsignaturaInscrita::className(), ['asignatura_id_asignatura' => 'id_asignatura']);
     }
+
+    public static function getListaTipos() {
+        $opciones[0] = ['id' => 1, 'nombre' => 'Normal'];
+        $opciones[1] = ['id' => 2, 'nombre' => 'Electivo'];
+        return \yii\helpers\ArrayHelper::map($opciones, 'id', 'nombre');
+    }
+
 }

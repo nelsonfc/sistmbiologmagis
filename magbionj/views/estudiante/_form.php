@@ -45,18 +45,22 @@ use yii\widgets\ActiveForm;
             <div class="row">
                 <div class="col-md-2">
                     <?php
-                    if(!$model->isNewRecord) {
+                    if(!$model->isNewRecord && $model->rut != null) {
                         $model->rut = getPuntosRut($model->rut);
                     }
                     echo $form->field($model, 'rut')->textInput(['maxlength' => true]) ?>
                 </div>
+                <div class="col-md-2">
+                    <?php
+                    echo $form->field($model, 'id_extranjero')->textInput(['maxlength' => true]) ?>
+                </div>
                 <div class="col-md-4">
                     <?= $form->field($model, 'nombres')->textInput(['maxlength' => true]) ?>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-2">
                     <?= $form->field($model, 'apellido_paterno')->textInput(['maxlength' => true]) ?>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-2">
                     <?= $form->field($model, 'apellido_materno')->textInput(['maxlength' => true]) ?>
                 </div>
             </div>

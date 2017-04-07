@@ -43,6 +43,9 @@ Modal::end();
 <div class="profesor-index">
 
     <?php
+    setlocale(LC_TIME, 'spanish');
+    date_default_timezone_set("America/Santiago");
+    $fecha = utf8_encode(strftime("%d de %B de %Y"));
     \yii\widgets\Pjax::begin(['id' => 'refrescar']);
     $titulo = "PROFESORES";
     $modelo = new \app\models\Profesor();
@@ -111,8 +114,31 @@ Modal::end();
             '{toggleData}',
         ],
         // set export properties
-        'export'=>[
-            'fontAwesome'=>true
+        'export' => [
+            'fontAwesome' => true
+        ],
+        'exportConfig' => [
+            GridView::EXCEL => [],
+            GridView::PDF => [
+                'config' => [
+                    'cssInline' => '.kv-heading-1{font-size:16px}',
+                    'marginTop' => '30',
+                    'cssFile' => '@vendor/kartik-v/yii2-mpdf/assets/kv-mpdf-bootstrap.min.css',
+                    'methods' => [
+                        'SetHeader'=>['<img style="width: 168px;
+    height: 47px; float:left;" src="imagenes/ubb.png"/>|Profesores|<img style="float:right;width: 168px;
+    height: 47px;" src="imagenes/logo.png"/>'],
+
+                        'SetFooter'=>['Generado el ' . utf8_encode($fecha).'|Página {PAGENO}| Empresas Piedra'],
+                    ],
+                    'options' => [
+                        'title' => 'Profesores',
+                        'subject' => 'PDF Document Subject',
+                        'keywords' => 'krajee, grid, export, yii2-grid, pdf'
+
+                    ]
+                ]
+            ],
         ],
         // parameters from the demo form
 

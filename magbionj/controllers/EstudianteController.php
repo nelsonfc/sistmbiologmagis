@@ -108,7 +108,7 @@ class EstudianteController extends Controller
         if (Yii::$app->request->isAjax  && $model->load(Yii::$app->request->post())) {
             \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
             $user = User::findOne($model->id_user);
-            if($model->rut != null){
+            if($model->rut != null && $model->rut != ''){
                 $rut = explode(".", $model->rut);
                 $user->username = $rut[0] . $rut[1] . $rut[2];
                 $model->rut = $rut[0] . $rut[1] . $rut[2];
