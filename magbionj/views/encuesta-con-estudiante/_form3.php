@@ -65,6 +65,11 @@ use yii\widgets\ActiveForm;
                 'icon' => 'glyphicon glyphicon-transfer',
                 'content' => '<h3>Tema VI: Opinión Global sobre el Programa</h3>This is step 3',
             ],
+            7 => [
+                'title' => 'Tema VII: Sugerencias y/o Comentarios',
+                'icon' => 'glyphicon glyphicon-transfer',
+                'content' => '<h3>Tema VII: Sugerencias y/o Comentarios</h3>This is step 3',
+            ],
         ],
         'complete_content' => "<center><h3>Encuesta finalizada Gracias por participar!!!</h3></center>", // Optional final screen
         'start_step' => 1, // Optional, start with a specific step

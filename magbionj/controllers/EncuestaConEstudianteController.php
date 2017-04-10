@@ -107,7 +107,8 @@ class EncuestaConEstudianteController extends Controller
     public function actionCompletarencuesta($id)
     {
         $model = new PreguntaNumerica();
-        $model->encuestas_id_encuesta;
+
+        PreguntaNumerica::findAll('id_pregunta_numerica');
 
         if ($model->load(Yii::$app->request->post())) {
 
