@@ -17,6 +17,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>
         <?= Html::a('Create Encuesta Con Estudiante', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Completar encuesta', ['create2'], ['class' => 'btn btn-success']) ?>
+
     </p>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,

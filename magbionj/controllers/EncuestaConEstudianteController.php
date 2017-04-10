@@ -2,6 +2,8 @@
 
 namespace app\controllers;
 
+use app\models\PreguntaNumerica;
+use Codeception\Module\Yii2;
 use Yii;
 use app\models\EncuestaConEstudiante;
 use app\models\EncuestaConEstudianteSearch;
@@ -72,6 +74,63 @@ class EncuestaConEstudianteController extends Controller
                 'model' => $model,
             ]);
         }
+    }
+
+    public function actionCreate2()
+    {
+        $model = new EncuestaConEstudiante();
+
+
+        if ($model->load(Yii::$app->request->post())) {
+
+            $model->fecha_completado = date('Y-m-d');
+            $model->anio = date('Y');
+            if (date('m') > 6) {
+                $model->semestre = 2;
+            } else {
+                $model->semestre = 1;
+            }
+            $model->id_estudiante = 1;
+            $model->estado = 1;
+
+
+            if ($model->save()) {
+                return $this->redirect(['completarencuesta','id' => $model->id_encuesta]);
+            }
+        } else {
+            return $this->render('create2', [
+                'model' => $model,
+            ]);
+        }
+    }
+
+    public function actionCompletarencuesta($id)
+    {
+        $model = new PreguntaNumerica();
+        $model->encuestas_id_encuesta;
+
+        if ($model->load(Yii::$app->request->post())) {
+
+            $model->fecha_completado = date('Y-m-d');
+            $model->anio = date('Y');
+            if (date('m') > 6) {
+                $model->semestre = 2;
+            } else {
+                $model->semestre = 1;
+            }
+            $model->id_estudiante = 1;
+            $model->estado = 1;
+
+
+            if ($model->save()) {
+                return $this->redirect(['completarencuesta','id' => $model->id_encuesta]);
+            }
+        } else {
+            return $this->render('completarencuesta', [
+                'model' => $model,
+            ]);
+        }
+
     }
 
     /**

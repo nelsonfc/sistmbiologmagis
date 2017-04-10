@@ -17,6 +17,7 @@ use Yii;
  *
  * @property Estudiante $idEstudiante
  * @property Encuesta $idEncuesta
+ * @property Estado $estado0
  * @property RespuestaNumerica[] $respuestaNumericas
  * @property RespuestaTexto[] $respuestaTextos
  */
@@ -41,6 +42,7 @@ class EncuestaConEstudiante extends \yii\db\ActiveRecord
             [['estado', 'anio', 'semestre', 'id_encuesta', 'id_estudiante'], 'integer'],
             [['id_estudiante'], 'exist', 'skipOnError' => true, 'targetClass' => Estudiante::className(), 'targetAttribute' => ['id_estudiante' => 'id_estudiante']],
             [['id_encuesta'], 'exist', 'skipOnError' => true, 'targetClass' => Encuesta::className(), 'targetAttribute' => ['id_encuesta' => 'id_encuesta']],
+            [['estado'], 'exist', 'skipOnError' => true, 'targetClass' => Estado::className(), 'targetAttribute' => ['estado' => 'id']],
         ];
     }
 
@@ -74,6 +76,14 @@ class EncuestaConEstudiante extends \yii\db\ActiveRecord
     public function getIdEncuesta()
     {
         return $this->hasOne(Encuesta::className(), ['id_encuesta' => 'id_encuesta']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getEstado0()
+    {
+        return $this->hasOne(Estado::className(), ['id' => 'estado']);
     }
 
     /**
