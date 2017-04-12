@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\models\PreguntaNumerica;
+use app\models\RespuestaNumerica;
 use Codeception\Module\Yii2;
 use Yii;
 use app\models\EncuestaConEstudiante;
@@ -95,7 +96,7 @@ class EncuestaConEstudianteController extends Controller
 
 
             if ($model->save()) {
-                return $this->redirect(['completarencuesta','id' => $model->id_encuesta]);
+                return $this->redirect(['completarencuesta','id' => $model->id_encuesta, 'idece'=> $model->id_ece]);
             }
         } else {
             return $this->render('create2', [
@@ -104,35 +105,56 @@ class EncuestaConEstudianteController extends Controller
         }
     }
 
-    public function actionCompletarencuesta($id)
+
+    public function actionCompletarencuesta($id, $idece)
     {
-        $model = new PreguntaNumerica();
+        $model2 = new EncuestaConEstudiante();
+        $model = new RespuestaNumerica();
 
         PreguntaNumerica::findAll('id_pregunta_numerica');
 
         if ($model->load(Yii::$app->request->post())) {
 
-            $model->fecha_completado = date('Y-m-d');
-            $model->anio = date('Y');
-            if (date('m') > 6) {
-                $model->semestre = 2;
-            } else {
-                $model->semestre = 1;
-            }
-            $model->id_estudiante = 1;
-            $model->estado = 1;
+            $model->id_ece= $idece;
+            $model->id_preguntanumerica=1;
 
 
             if ($model->save()) {
-                return $this->redirect(['completarencuesta','id' => $model->id_encuesta]);
+                return $this->redirect(['completarencuesta','id' => $id, 'idece'=> $idece]);
             }
         } else {
             return $this->render('completarencuesta', [
+                'model' => $model,
+                'content' => $this->renderPartial('encuestatemauno', ['model'=> $model , 'idencuesta'=> $id ,'id'=> $idece]),
+                'content2' => $this->renderPartial('create', ['model'=> $model2 ])
+            ]);
+        }
+
+    }
+    public function actionEncuestatemauno($id, $idece){
+
+        $model = new RespuestaNumerica();
+
+
+
+
+        if ($model->load(Yii::$app->request->post()) ) {
+
+            $model->id_ece= $idece;
+            $model->id_preguntanumerica=1;
+
+
+
+            if($model->save())
+                return $this->redirect(['view', 'id' => $model->id_respuestanumero]);
+        } else {
+            return $this->render('encuestatemauno', [
                 'model' => $model,
             ]);
         }
 
     }
+
 
     /**
      * Updates an existing EncuestaConEstudiante model.
