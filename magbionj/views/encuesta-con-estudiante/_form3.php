@@ -23,12 +23,7 @@ use yii\widgets\ActiveForm;
             1 => [
                 'title' => 'Tema 1: Sobre la organizacion del Programa',
                 'icon' => 'glyphicon glyphicon-cloud-download',
-                'content' =>
-
-                    "<h3>Tema 1: Sobre la organizacion del Programa</h3>"
-                ,
-
-
+                'content' => $content,
                 'buttons' => [
                     'next' => [
                         'title' => 'Siguiente tema',
