@@ -22,16 +22,15 @@ use yii\widgets\ActiveForm;
         'id' => 'stepwizard',
         'steps' => [
             1 => [
-<<<<<<< HEAD
+
                 'title' => 'Tema 1: Sobre la organizacion del Programa',
                 'icon' => 'glyphicon glyphicon-cloud-download',
-                'content' => $content,
-=======
+
                 'title' => 'Tema I: Sobre la organizacion del Programa',
                 'icon' => 'glyphicon glyphicon-list-alt',
                 'content' => "<h3>Tema I: Sobre la organizacion del Programa</h3>".$content
                 ,
->>>>>>> origin/master
+
                 'buttons' => [
                     'next' => [
                         'title' => 'Siguiente tema',

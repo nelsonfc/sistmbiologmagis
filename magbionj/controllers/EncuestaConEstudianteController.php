@@ -130,14 +130,12 @@ class EncuestaConEstudianteController extends Controller
         } else {
             return $this->render('completarencuesta', [
                 'model' => $model,
-<<<<<<< HEAD
+
                 'content' => $this->renderPartial('view', [
                     'model' => $this->findModel($id),
-                ])
-=======
+                ]),
                 'content' => $this->renderPartial('encuestatemauno', ['model'=> $model , 'idencuesta'=> $id ,'id'=> $idece]),
                 'content2' => $this->renderPartial('create', ['model'=> $model2 ])
->>>>>>> origin/master
             ]);
         }
 
