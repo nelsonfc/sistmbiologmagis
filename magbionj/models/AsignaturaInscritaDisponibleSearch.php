@@ -5,12 +5,12 @@ namespace app\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\ProfesorConAsignatura;
+use app\models\AsignaturaInscrita;
 
 /**
- * ProfesorConAsignaturaSearch represents the model behind the search form about `app\models\ProfesorConAsignatura`.
+ * AsignaturaInscritaDisponibleSearch represents the model behind the search form about `app\models\AsignaturaInscrita`.
  */
-class ProfesorConAsignaturaSearch extends ProfesorConAsignatura
+class AsignaturaInscritaDisponibleSearch extends AsignaturaInscrita
 {
     /**
      * @inheritdoc
@@ -18,7 +18,7 @@ class ProfesorConAsignaturaSearch extends ProfesorConAsignatura
     public function rules()
     {
         return [
-            [['id_profesor_asignatura', 'cargo', 'asignatura_disponible_id_asignatura_disponible', 'profesor_id_profesor'], 'integer'],
+            [['id_asignatura_inscrita', 'calificacion', 'estudiante_id_estudiante', 'asignatura_disponible_id_asignatura_disponible'], 'integer'],
         ];
     }
 
@@ -40,7 +40,7 @@ class ProfesorConAsignaturaSearch extends ProfesorConAsignatura
      */
     public function search($params)
     {
-        $query = ProfesorConAsignatura::find();
+        $query = AsignaturaInscrita::find();
 
         // add conditions that should always apply here
 
@@ -58,10 +58,10 @@ class ProfesorConAsignaturaSearch extends ProfesorConAsignatura
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'id_profesor_asignatura' => $this->id_profesor_asignatura,
-            'cargo' => $this->cargo,
+            'id_asignatura_inscrita' => $this->id_asignatura_inscrita,
+            'calificacion' => $this->calificacion,
+            'estudiante_id_estudiante' => $this->estudiante_id_estudiante,
             'asignatura_disponible_id_asignatura_disponible' => $this->asignatura_disponible_id_asignatura_disponible,
-            'profesor_id_profesor' => $this->profesor_id_profesor,
         ]);
 
         return $dataProvider;

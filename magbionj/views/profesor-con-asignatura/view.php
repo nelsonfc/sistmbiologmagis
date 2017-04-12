@@ -30,7 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'id_profesor_asignatura',
             'cargo',
-            'asignatura_inscrita_id_asignatura_inscrita',
+            'asignatura_disponible_id_asignatura_disponible',
             'profesor_id_profesor',
         ],
     ]) ?>

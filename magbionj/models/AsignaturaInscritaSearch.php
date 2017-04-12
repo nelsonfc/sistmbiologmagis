@@ -18,7 +18,7 @@ class AsignaturaInscritaSearch extends AsignaturaInscrita
     public function rules()
     {
         return [
-            [['id_asignatura_inscrita', 'calificacion', 'anio', 'semestre', 'estudiante_id_estudiante', 'asignatura_id_asignatura'], 'integer'],
+            [['id_asignatura_inscrita', 'calificacion', 'estudiante_id_estudiante', 'asignatura_disponible_id_asignatura_disponible'], 'integer'],
         ];
     }
 
@@ -60,10 +60,8 @@ class AsignaturaInscritaSearch extends AsignaturaInscrita
         $query->andFilterWhere([
             'id_asignatura_inscrita' => $this->id_asignatura_inscrita,
             'calificacion' => $this->calificacion,
-            'anio' => $this->anio,
-            'semestre' => $this->semestre,
             'estudiante_id_estudiante' => $this->estudiante_id_estudiante,
-            'asignatura_id_asignatura' => $this->asignatura_id_asignatura,
+            'asignatura_disponible_id_asignatura_disponible' => $this->asignatura_disponible_id_asignatura_disponible,
         ]);
 
         return $dataProvider;

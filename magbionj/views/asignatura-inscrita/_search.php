@@ -19,13 +19,9 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'calificacion') ?>
 
-    <?= $form->field($model, 'anio') ?>
-
-    <?= $form->field($model, 'semestre') ?>
-
     <?= $form->field($model, 'estudiante_id_estudiante') ?>
 
-    <?php // echo $form->field($model, 'asignatura_id_asignatura') ?>
+    <?= $form->field($model, 'asignatura_disponible_id_asignatura_disponible') ?>
 
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>

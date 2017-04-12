@@ -80,7 +80,7 @@ use yii\widgets\ActiveForm;
                     echo $form->field($model, 'troncal_id_troncal')->widget(\kartik\select2\Select2::classname(), [
                         'data' => $model->listaTroncal,
                         'language' => 'es',
-                        'options' => ['placeholder' => 'Ingrese Troncal...'],
+                        'options' => ['placeholder' => 'Ingrese Troncal...', 'id' => 'troncal'.$model->id_profesor],
                         'pluginOptions' => [
 
                         ],
@@ -93,7 +93,7 @@ use yii\widgets\ActiveForm;
                     echo $form->field($model, 'jerariquia_id_jerarquia')->widget(\kartik\select2\Select2::classname(), [
                         'data' => $model->listaJerarquia,
                         'language' => 'es',
-                        'options' => ['placeholder' => 'Ingrese Jerarquia...'],
+                        'options' => ['placeholder' => 'Ingrese Jerarquia...', 'id' => 'jerarquia'.$model->id_profesor],
                         'pluginOptions' => [
 
                         ],

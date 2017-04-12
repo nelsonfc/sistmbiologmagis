@@ -45,7 +45,7 @@ use yii\widgets\ActiveForm;
                     echo $form->field($model, 'tipo')->widget(\kartik\select2\Select2::classname(), [
                         'data' => $model->listaTipos,
                         'language' => 'es',
-                        'options' => ['placeholder' => 'Ingrese Tipo de Asignatura...'],
+                        'options' => ['placeholder' => 'Ingrese Tipo de Asignatura...', 'id' => 'tipo'.$model->id_asignatura],
                         'pluginOptions' => [
 
                         ],

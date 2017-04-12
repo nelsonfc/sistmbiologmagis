@@ -99,11 +99,10 @@ use yii\widgets\ActiveForm;
                 </div>
                 <div class="col-md-3">
                     <?php
-
                     echo $form->field($model, 'troncal_id_troncal')->widget(\kartik\select2\Select2::classname(), [
                         'data' => $model->listaTroncal,
                         'language' => 'es',
-                        'options' => ['placeholder' => 'Ingrese Troncal...'],
+                        'options' => ['placeholder' => 'Ingrese Troncal...', 'id' => 'troncal'.$model->id_estudiante],
                         'pluginOptions' => [
 
                         ],
@@ -116,7 +115,7 @@ use yii\widgets\ActiveForm;
                     echo $form->field($model, 'anio_ingreso')->widget(\kartik\select2\Select2::classname(), [
                         'data' => $model->listaAnios,
                         'language' => 'es',
-                        'options' => ['placeholder' => 'Ingrese Año de Ingreso...'],
+                        'options' => ['placeholder' => 'Ingrese Año de Ingreso...', 'id' => 'anio'.$model->id_estudiante],
                         'pluginOptions' => [
 
                         ],

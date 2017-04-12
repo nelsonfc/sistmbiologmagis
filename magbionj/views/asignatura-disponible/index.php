@@ -2,8 +2,6 @@
 
 use yii\helpers\Html;
 use kartik\grid\GridView;
-use app\models\SituacionAcademica;
-use app\models\Troncal;
 use yii\bootstrap\Modal;
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\EstudianteSearch */
@@ -11,7 +9,7 @@ use yii\bootstrap\Modal;
 
 $this->title = '';
 Modal::begin([
-    'header' => '<h4 class="modal-title">Modificar Estudiante</h4>',
+    'header' => '<h4 class="modal-title">Modificar Asignatura</h4>',
     'id' => 'modaleditar',
     'class' => 'modal',
     'closeButton' => ['onclick' => "$('div').removeClass('modal-backdrop fade in');"],
@@ -31,7 +29,7 @@ echo "<div class='modalContent'></div>";
 Modal::end();
 Modal::begin([
     'id' => 'modalingresar',
-    'header' => '<h4 class="modal-title">Agregar Estudiante</h4>',
+    'header' => '<h4 class="modal-title">Agregar Asignatura</h4>',
     'class' => 'modal',
     'closeButton' => ['onclick' => "$('div').removeClass('modal-backdrop fade in');"],
     'size' => 'modal-lg'
@@ -39,33 +37,39 @@ Modal::begin([
 echo "<div class='modalContent'></div>";
 
 Modal::end();
-?>
-<div class="estudiante-index">
+/* @var $this yii\web\View */
+/* @var $searchModel app\models\AsignaturaSearch */
+/* @var $dataProvider yii\data\ActiveDataProvider */
 
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+$this->title = '';
+?>
+<div class="asignatura-disponible-index">
 
     <?php
     setlocale(LC_TIME, 'spanish');
     date_default_timezone_set("America/Santiago");
     $fecha = utf8_encode(strftime("%d de %B de %Y"));
     \yii\widgets\Pjax::begin(['id' => 'refrescar']);
-    $titulo = "ESTUDIANTES";
-    $modelo = new \app\models\Estudiante();
+    $titulo = "ASIGNATURAS DISPONIBLES";
+    $modelo = new \app\models\AsignaturaDisponible();
     $gridColumns = [
-        //'id_estudiante',
-        ['attribute' => 'rut', 'width' => '25%'],
-        'id_extranjero',
-        'nombres',
-        'apellido_paterno',
-        'apellido_materno',
-        //'telefono',
-        //'movil',
-         //'correo',
-        // 'direccion',
-        ['attribute' => 'anio_ingreso',
-            'width' => '10.49%',
+        ['attribute' => 'asignatura_id_asignatura',
+            'width' => '28.49%',
             'value' => function($model) {
-                return $model->anio_ingreso;
+                return \app\models\Asignatura::findOne($model->asignatura_id_asignatura)->nombre;
+            },
+            'filterType' => kartik\grid\GridView::FILTER_SELECT2,
+            'filter' => $modelo->listaAsignatura,
+            'filterInputOptions' => ['placeholder' => 'Ingrese Asignatura...'],
+            'format' => 'raw',
+            'filterWidgetOptions' => [
+                'pluginOptions' => ['allowClear' => true],
+            ],
+        ],
+        ['attribute' => 'anio',
+            'width' => '18.49%',
+            'value' => function($model) {
+                return $model->anio;
             },
             'filterType' => kartik\grid\GridView::FILTER_SELECT2,
             'filter' => $modelo->listaAnios,
@@ -75,40 +79,39 @@ Modal::end();
                 'pluginOptions' => ['allowClear' => true],
             ],
         ],
-        // 'anio_egreso',
-        // 'id_extranjero',
-        // 'procedencia',
-        // 'profesion',
-        // 'direccion_extranjera',
-        ['attribute' => 'troncal_id_troncal',
-            'width' => '10.49%',
+        ['attribute' => 'semestre',
+            'width' => '18.49%',
             'value' => function($model) {
-                return Troncal::findOne($model->troncal_id_troncal)->nombre;
+                return $model->semestre;
             },
             'filterType' => kartik\grid\GridView::FILTER_SELECT2,
-            'filter' => $modelo->listaTroncal,
-            'filterInputOptions' => ['placeholder' => 'Ingrese Troncal...'],
+            'filter' => $modelo->listaSemestre,
+            'filterInputOptions' => ['placeholder' => 'Ingrese Semestre...'],
             'format' => 'raw',
             'filterWidgetOptions' => [
                 'pluginOptions' => ['allowClear' => true],
             ],
         ],
-        ['attribute' => 'situacion_academica_id_situacion',
-            'width' => '10.49%',
+        ['attribute' => 'profesor',
+            'format' => 'html',
             'value' => function($model) {
-                return SituacionAcademica::findOne($model->situacion_academica_id_situacion)->nombre;
+                $docentes_aux = \app\models\ProfesorConAsignatura::find()->where(['asignatura_disponible_id_asignatura_disponible' => $model->id_asignatura_disponible])->all();
+                $docentes = '';
+                foreach ($docentes_aux as $docente) {
+                    $docentes = $docentes . '<ul><li>' . \app\models\Profesor::findOne($docente->profesor_id_profesor)->nombres.' '.\app\models\Profesor::findOne($docente->profesor_id_profesor)->apellidos.'</li></ul>';
+                }
+                return $docentes;
             },
             'filterType' => kartik\grid\GridView::FILTER_SELECT2,
-            'filter' => $modelo->listaSituacion,
-            'filterInputOptions' => ['placeholder' => 'Ingrese Situación...'],
+            'filter' => $modelo->listaProfesor,
+            'filterInputOptions' => ['placeholder' => 'Ingrese Nombre...'],
             'format' => 'raw',
             'filterWidgetOptions' => [
                 'pluginOptions' => ['allowClear' => true],
             ],
         ],
-
         ['class' => 'kartik\grid\ActionColumn',
-            'template' => '{view}{update}{inscribir}',
+            'template' => '{update}',
             'buttons' => [
                 'view' => function ($url, $model) {
                     return Html::a(Yii::t('app', '<span class="glyphicon glyphicon-eye-open"></span>&nbsp'), $url, ['class' => 'modalButton2']);
@@ -119,14 +122,7 @@ Modal::end();
                       'id' => 'modalButton','title' => Yii::t('yii', 'Modificar'), 'data-toggle' => 'modal',
                       'data-target' => '#modaleditardocente', 'url' => 'javascript:void(0);'
                       ]); */
-                },
-                'inscribir' => function ($url, $model) {
-        return Html::a(Yii::t('app', '<span class="glyphicon glyphicon-book"></span>'), ['asignatura-inscrita/create', 'id' => $model->id_estudiante],[]);
-        /* Html::a('<span class="glyphicon glyphicon-pencil"></span>', $url, [
-          'id' => 'modalButton','title' => Yii::t('yii', 'Modificar'), 'data-toggle' => 'modal',
-          'data-target' => '#modaleditardocente', 'url' => 'javascript:void(0);'
-          ]); */
-    }
+                }
             ]
         ],];
     echo GridView::widget([
@@ -145,6 +141,7 @@ Modal::end();
             '{export}',
             '{toggleData}',
         ],
+        // set export properties
         'export' => [
             'fontAwesome' => true
         ],
@@ -157,13 +154,13 @@ Modal::end();
                     'cssFile' => '@vendor/kartik-v/yii2-mpdf/assets/kv-mpdf-bootstrap.min.css',
                     'methods' => [
                         'SetHeader'=>['<img style="width: 168px;
-    height: 47px; float:left;" src="imagenes/ubb.png"/>|Estudiantes|<img style="float:right;width: 168px;
+    height: 47px; float:left;" src="imagenes/ubb.png"/>|Asignaturas|<img style="float:right;width: 168px;
     height: 47px;" src="imagenes/logo.png"/>'],
 
                         'SetFooter'=>['Generado el ' . utf8_encode($fecha).'|Página {PAGENO}| Empresas Piedra'],
                     ],
                     'options' => [
-                        'title' => 'Estudiantes',
+                        'title' => 'Asignaturas',
                         'subject' => 'PDF Document Subject',
                         'keywords' => 'krajee, grid, export, yii2-grid, pdf'
 
@@ -230,10 +227,4 @@ $this->registerJs('$(document).on("ready pjax:success", function() {
 });')
 
 ;
-?>
-<?php
-function getPuntosRut( $rut ){
-    $rutTmp = explode( "-", $rut );
-    return number_format( $rutTmp[0], 0, "", ".") . '-' . $rutTmp[1];
-}
 ?>

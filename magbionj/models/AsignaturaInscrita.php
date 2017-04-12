@@ -9,14 +9,11 @@ use Yii;
  *
  * @property integer $id_asignatura_inscrita
  * @property integer $calificacion
- * @property integer $anio
- * @property integer $semestre
  * @property integer $estudiante_id_estudiante
- * @property integer $asignatura_id_asignatura
+ * @property integer $asignatura_disponible_id_asignatura_disponible
  *
- * @property Asignatura $asignaturaIdAsignatura
+ * @property AsignaturaDisponible $asignaturaDisponibleIdAsignaturaDisponible
  * @property Estudiante $estudianteIdEstudiante
- * @property ProfesorConAsignatura[] $profesorConAsignaturas
  */
 class AsignaturaInscrita extends \yii\db\ActiveRecord
 {
@@ -34,9 +31,9 @@ class AsignaturaInscrita extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['calificacion', 'anio', 'semestre', 'estudiante_id_estudiante', 'asignatura_id_asignatura'], 'required'],
-            [['calificacion', 'anio', 'semestre', 'estudiante_id_estudiante', 'asignatura_id_asignatura'], 'integer'],
-            [['asignatura_id_asignatura'], 'exist', 'skipOnError' => true, 'targetClass' => Asignatura::className(), 'targetAttribute' => ['asignatura_id_asignatura' => 'id_asignatura']],
+            [['calificacion', 'estudiante_id_estudiante', 'asignatura_disponible_id_asignatura_disponible'], 'required'],
+            [['calificacion', 'estudiante_id_estudiante', 'asignatura_disponible_id_asignatura_disponible'], 'integer'],
+            [['asignatura_disponible_id_asignatura_disponible'], 'exist', 'skipOnError' => true, 'targetClass' => AsignaturaDisponible::className(), 'targetAttribute' => ['asignatura_disponible_id_asignatura_disponible' => 'id_asignatura_disponible']],
             [['estudiante_id_estudiante'], 'exist', 'skipOnError' => true, 'targetClass' => Estudiante::className(), 'targetAttribute' => ['estudiante_id_estudiante' => 'id_estudiante']],
         ];
     }
@@ -49,19 +46,17 @@ class AsignaturaInscrita extends \yii\db\ActiveRecord
         return [
             'id_asignatura_inscrita' => 'Id Asignatura Inscrita',
             'calificacion' => 'Calificacion',
-            'anio' => 'Anio',
-            'semestre' => 'Semestre',
             'estudiante_id_estudiante' => 'Estudiante Id Estudiante',
-            'asignatura_id_asignatura' => 'Asignatura Id Asignatura',
+            'asignatura_disponible_id_asignatura_disponible' => 'Asignatura Disponible Id Asignatura Disponible',
         ];
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getAsignaturaIdAsignatura()
+    public function getAsignaturaDisponibleIdAsignaturaDisponible()
     {
-        return $this->hasOne(Asignatura::className(), ['id_asignatura' => 'asignatura_id_asignatura']);
+        return $this->hasOne(AsignaturaDisponible::className(), ['id_asignatura_disponible' => 'asignatura_disponible_id_asignatura_disponible']);
     }
 
     /**
@@ -70,13 +65,5 @@ class AsignaturaInscrita extends \yii\db\ActiveRecord
     public function getEstudianteIdEstudiante()
     {
         return $this->hasOne(Estudiante::className(), ['id_estudiante' => 'estudiante_id_estudiante']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getProfesorConAsignaturas()
-    {
-        return $this->hasMany(ProfesorConAsignatura::className(), ['asignatura_inscrita_id_asignatura_inscrita' => 'id_asignatura_inscrita']);
     }
 }

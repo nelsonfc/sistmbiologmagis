@@ -9,10 +9,10 @@ use Yii;
  *
  * @property integer $id_profesor_asignatura
  * @property integer $cargo
- * @property integer $asignatura_inscrita_id_asignatura_inscrita
+ * @property integer $asignatura_disponible_id_asignatura_disponible
  * @property integer $profesor_id_profesor
  *
- * @property AsignaturaInscrita $asignaturaInscritaIdAsignaturaInscrita
+ * @property AsignaturaDisponible $asignaturaDisponibleIdAsignaturaDisponible
  * @property Profesor $profesorIdProfesor
  */
 class ProfesorConAsignatura extends \yii\db\ActiveRecord
@@ -31,9 +31,10 @@ class ProfesorConAsignatura extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['cargo', 'asignatura_inscrita_id_asignatura_inscrita', 'profesor_id_profesor'], 'required'],
-            [['cargo', 'asignatura_inscrita_id_asignatura_inscrita', 'profesor_id_profesor'], 'integer'],
-            [['asignatura_inscrita_id_asignatura_inscrita'], 'exist', 'skipOnError' => true, 'targetClass' => AsignaturaInscrita::className(), 'targetAttribute' => ['asignatura_inscrita_id_asignatura_inscrita' => 'id_asignatura_inscrita']],
+            [['cargo', 'asignatura_disponible_id_asignatura_disponible', 'profesor_id_profesor'], 'required'],
+            [['cargo', 'asignatura_disponible_id_asignatura_disponible', 'profesor_id_profesor'], 'integer'],
+            [['asignatura_disponible_id_asignatura_disponible'], 'unique', 'targetAttribute' => ['asignatura_disponible_id_asignatura_disponible', 'profesor_id_profesor']],
+            [['asignatura_disponible_id_asignatura_disponible'], 'exist', 'skipOnError' => true, 'targetClass' => AsignaturaDisponible::className(), 'targetAttribute' => ['asignatura_disponible_id_asignatura_disponible' => 'id_asignatura_disponible']],
             [['profesor_id_profesor'], 'exist', 'skipOnError' => true, 'targetClass' => Profesor::className(), 'targetAttribute' => ['profesor_id_profesor' => 'id_profesor']],
         ];
     }
@@ -46,7 +47,7 @@ class ProfesorConAsignatura extends \yii\db\ActiveRecord
         return [
             'id_profesor_asignatura' => 'Id Profesor Asignatura',
             'cargo' => 'Cargo',
-            'asignatura_inscrita_id_asignatura_inscrita' => 'Asignatura Inscrita Id Asignatura Inscrita',
+            'asignatura_disponible_id_asignatura_disponible' => 'Asignatura Disponible Id Asignatura Disponible',
             'profesor_id_profesor' => 'Profesor Id Profesor',
         ];
     }
@@ -54,9 +55,9 @@ class ProfesorConAsignatura extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getAsignaturaInscritaIdAsignaturaInscrita()
+    public function getAsignaturaDisponibleIdAsignaturaDisponible()
     {
-        return $this->hasOne(AsignaturaInscrita::className(), ['id_asignatura_inscrita' => 'asignatura_inscrita_id_asignatura_inscrita']);
+        return $this->hasOne(AsignaturaDisponible::className(), ['id_asignatura_disponible' => 'asignatura_disponible_id_asignatura_disponible']);
     }
 
     /**

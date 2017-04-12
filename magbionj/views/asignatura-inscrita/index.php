@@ -26,10 +26,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
             'id_asignatura_inscrita',
             'calificacion',
-            'anio',
-            'semestre',
             'estudiante_id_estudiante',
-            // 'asignatura_id_asignatura',
+            'asignatura_disponible_id_asignatura_disponible',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],
