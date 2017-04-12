@@ -114,9 +114,14 @@ class EncuestaConEstudianteController extends Controller
         PreguntaNumerica::findAll('id_pregunta_numerica');
 
         if ($model->load(Yii::$app->request->post())) {
+            foreach ($model as $valorrespuesta){
+            $i=0;
+                $model->valor_respuesta= $valorrespuesta[$i];
+                $model->id_ece= $idece;
+                $model->id_preguntanumerica=27+$i;
 
-            $model->id_ece= $idece;
-            $model->id_preguntanumerica=1;
+            }
+
 
 
             if ($model->save()) {

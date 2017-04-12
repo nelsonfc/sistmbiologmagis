@@ -16,15 +16,19 @@ use yii\widgets\ActiveForm;
         <div class="row">
             <div class="col-md-6">
 
-                <?php $pregunta = PreguntaNumerica::find()->where(['id_pregunta_numerica' => 1])->one();
+                <?php $pregunta = PreguntaNumerica::find()->where(['>=','id_pregunta_numerica' , 27])->andWhere(['<=','id_pregunta_numerica' , 37])->all();
+                $i=1;
+                $list = [1 => '1', 2 => '2', 3 => '3', 4 => '4', 5 => '5'];
+                echo "<br>";
+                foreach ($pregunta as $preguntas) {
 
-                echo "<br>"."1.- ".$pregunta->pregunta; ?>
+                   echo $i++.".- " .  $preguntas->pregunta;
+
+                    echo $form->field($model, "[{$i}]valor_respuesta")->radioList($list);
+                }
+                 ?>
             </div>
-            <div class="col-md-6">
-                <?php $list = [1 => '1', 2 => '2', 3 => '3', 4 => '4', 5 => '5'];
-                echo $form->field($model, 'valor_respuesta')->radioList($list);
-                ?>
-            </div>
+
         </div>
     </div>
 
