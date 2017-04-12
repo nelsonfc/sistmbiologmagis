@@ -1,6 +1,7 @@
 <?php
 
 use app\models\PreguntaNumerica;
+use drsdre\wizardwidget\WizardWidget;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -21,9 +22,16 @@ use yii\widgets\ActiveForm;
         'id' => 'stepwizard',
         'steps' => [
             1 => [
+<<<<<<< HEAD
                 'title' => 'Tema 1: Sobre la organizacion del Programa',
                 'icon' => 'glyphicon glyphicon-cloud-download',
                 'content' => $content,
+=======
+                'title' => 'Tema I: Sobre la organizacion del Programa',
+                'icon' => 'glyphicon glyphicon-list-alt',
+                'content' => "<h3>Tema I: Sobre la organizacion del Programa</h3>".$content
+                ,
+>>>>>>> origin/master
                 'buttons' => [
                     'next' => [
                         'title' => 'Siguiente tema',
@@ -35,39 +43,44 @@ use yii\widgets\ActiveForm;
             ],
 
             2 => [
-                'title' => 'Step 2',
-                'icon' => 'glyphicon glyphicon-cloud-upload',
-                'content' => '<h3>Step 2</h3>This is step 2',
+                'title' => 'Tema II: Sobre la Administracion General del Programa',
+                'icon' => 'glyphicon glyphicon-plane',
+                'content' => $content2,
                 'skippable' => true,
             ],
             3 => [
-                'title' => 'Step 3',
-                'icon' => 'glyphicon glyphicon-transfer',
-                'content' => '<h3>Step 3</h3>This is step 3',
+                'title' => 'Tema III: Sobre el Entorno de estudio',
+                'icon' => 'glyphicon glyphicon-education',
+                'content' => '<h3>Tema 3: Sobre el Entorno de estudio</h3>This is step 3',
             ],
             4 => [
-                'title' => 'Step 3',
-                'icon' => 'glyphicon glyphicon-transfer',
-                'content' => '<h3>Step 3</h3>This is step 3',
+                'title' => 'Tema IV: Sobre las Bibliotecas',
+                'icon' => 'glyphicon glyphicon-book',
+                'content' => '<h3>Tema IV: Sobre las Bibliotecas</h3>This is step 3',
             ],
             5 => [
-                'title' => 'Step 3',
-                'icon' => 'glyphicon glyphicon-transfer',
-                'content' => '<h3>Step 3</h3>This is step 3',
+                'title' => 'Tema V: Sobre los espacios físicos',
+                'icon' => 'glyphicon glyphicon-tree-deciduous',
+                'content' => '<h3>Tema V: Sobre los espacios físicos</h3>This is step 3',
             ],
             6 => [
-                'title' => 'Step 3',
-                'icon' => 'glyphicon glyphicon-transfer',
-                'content' => '<h3>Step 3</h3>This is step 3',
+                'title' => 'Tema VI: Opinión Global sobre el Programa',
+                'icon' => 'glyphicon glyphicon-globe',
+                'content' => '<h3>Tema VI: Opinión Global sobre el Programa</h3>This is step 3',
+            ],
+            7 => [
+                'title' => 'Tema VII: Sugerencias y/o Comentarios',
+                'icon' => 'glyphicon glyphicon-comment',
+                'content' => '<h3>Tema VII: Sugerencias y/o Comentarios</h3>This is step 3',
             ],
         ],
-        'complete_content' => "<center><h3>Encuesta finalizada Gracias por participar!!!</h3></center>", // Optional final screen
+        //'complete_content' => "<center><h3>Encuesta finalizada Gracias por participar!!!</h3></center>", // Optional final screen
         'start_step' => 1, // Optional, start with a specific step
     ];
 
     ?>
 
-    <?= \drsdre\wizardwidget\WizardWidget::widget($wizard_config); ?>
+    <?= WizardWidget::widget($wizard_config); ?>
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
