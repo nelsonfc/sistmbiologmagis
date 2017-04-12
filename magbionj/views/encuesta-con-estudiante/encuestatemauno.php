@@ -15,6 +15,8 @@ $this->title = 'Create Respuesta Numerica';
 
     <?= $this->render('_formrespuestatemauno', [
         'model' => $model,
+        'model2' => $model2,
+        'idece' => $idece
     ]) ?>
 
 </div>

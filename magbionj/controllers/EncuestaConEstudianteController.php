@@ -11,6 +11,8 @@ use app\models\EncuestaConEstudianteSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use app\base\Model;
+
 
 /**
  * EncuestaConEstudianteController implements the CRUD actions for EncuestaConEstudiante model.
@@ -142,23 +144,41 @@ class EncuestaConEstudianteController extends Controller
     }
     public function actionEncuestatemauno($id, $idece){
 
-        $model = new RespuestaNumerica();
+        $model = [new RespuestaNumerica];
+        $model2 = new RespuestaNumerica();
+        if (Model::loadMultiple($model, Yii::$app->request->post())) {
+            $model = Model::createMultiple(RespuestaNumerica::classname());
+            Model::loadMultiple($model, Yii::$app->request->post());
+            $valid = true;
+            if ($valid) {
+                $transaction = \Yii::$app->db->beginTransaction();
+                try {
+                        foreach ($model as $modelAddress) {
+                            $modelo = new RespuestaNumerica();
+                            $modelo->valor_respuesta = $modelAddress->valor_respuesta;
+                            $modelo->id_ece = 37;
+                            $modelo->id_preguntanumerica = $modelAddress->id_preguntanumerica;
+                            if (! ($flag = $modelo->save(false))) {
+                                $transaction->rollBack();
+                                break;
+                            }
+                        }
 
+                    if ($flag) {
+                        $transaction->commit();
 
-
-
-        if ($model->load(Yii::$app->request->post()) ) {
-
-            $model->id_ece= $idece;
-            $model->id_preguntanumerica=1;
-
-
-
-            if($model->save())
-                return $this->redirect(['view', 'id' => $model->id_respuestanumero]);
+                        return $this->redirect(['index']);
+                    }
+                } catch (Exception $e) {
+                    $transaction->rollBack();
+                }
+            }else{
+            }
         } else {
             return $this->render('encuestatemauno', [
-                'model' => $model,
+                'model' => (empty($model)) ? [new Respuestanumerica] : $model,
+                'model2' => $model2,
+                'idece' => $idece
             ]);
         }
 
