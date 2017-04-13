@@ -13,10 +13,14 @@ $this->title = 'Create Respuesta Numerica';
 
 
 
-    <?= $this->render('_formrespuestatemauno', [
+    <?=
+
+    $this->render('_formrespuestatemauno', [
         'model' => $model,
         'model2' => $model2,
-        'idece' => $idece
+        'model3' => $model3,
+        'idece' => $idece,
+        'idpaso' => $idpaso
     ]) ?>
 
 </div>
