@@ -17,6 +17,8 @@ use Yii;
  */
 class AsignaturaInscrita extends \yii\db\ActiveRecord
 {
+    public $anio;
+    public $semestre;
     /**
      * @inheritdoc
      */
@@ -32,7 +34,7 @@ class AsignaturaInscrita extends \yii\db\ActiveRecord
     {
         return [
             [['calificacion', 'estudiante_id_estudiante', 'asignatura_disponible_id_asignatura_disponible'], 'required'],
-            [['calificacion', 'estudiante_id_estudiante', 'asignatura_disponible_id_asignatura_disponible'], 'integer'],
+            [['calificacion', 'estudiante_id_estudiante', 'asignatura_disponible_id_asignatura_disponible', 'anio', 'semestre'], 'integer'],
             [['asignatura_disponible_id_asignatura_disponible'], 'exist', 'skipOnError' => true, 'targetClass' => AsignaturaDisponible::className(), 'targetAttribute' => ['asignatura_disponible_id_asignatura_disponible' => 'id_asignatura_disponible']],
             [['estudiante_id_estudiante'], 'exist', 'skipOnError' => true, 'targetClass' => Estudiante::className(), 'targetAttribute' => ['estudiante_id_estudiante' => 'id_estudiante']],
         ];
@@ -48,6 +50,7 @@ class AsignaturaInscrita extends \yii\db\ActiveRecord
             'calificacion' => 'Calificacion',
             'estudiante_id_estudiante' => 'Estudiante Id Estudiante',
             'asignatura_disponible_id_asignatura_disponible' => 'Asignatura Disponible Id Asignatura Disponible',
+            'anio' => 'Año'
         ];
     }
 
@@ -57,6 +60,25 @@ class AsignaturaInscrita extends \yii\db\ActiveRecord
     public function getAsignaturaDisponibleIdAsignaturaDisponible()
     {
         return $this->hasOne(AsignaturaDisponible::className(), ['id_asignatura_disponible' => 'asignatura_disponible_id_asignatura_disponible']);
+    }
+
+    public static function getListaAnios() {
+        $opciones = '';
+        $j = 0;
+        for($i = 2010 ; $i < date("Y")+1 ;$i++ ){
+            $opciones[$j]= ['id' => $i , 'nombre' => $i];
+            $j++;
+        }
+        return \yii\helpers\ArrayHelper::map($opciones, 'id', 'nombre');
+    }
+    public static function getListaSemestre() {
+        $opciones = '';
+        $j = 0;
+        for($i = 1 ; $i < 3 ;$i++ ){
+            $opciones[$j]= ['id' => $i , 'nombre' => $i];
+            $j++;
+        }
+        return \yii\helpers\ArrayHelper::map($opciones, 'id', 'nombre');
     }
 
     /**
