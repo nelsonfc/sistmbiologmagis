@@ -47,7 +47,7 @@ class AsignaturaInscrita extends \yii\db\ActiveRecord
     {
         return [
             'id_asignatura_inscrita' => 'Id Asignatura Inscrita',
-            'calificacion' => 'Calificacion',
+            'calificacion' => 'Nota',
             'estudiante_id_estudiante' => 'Estudiante Id Estudiante',
             'asignatura_disponible_id_asignatura_disponible' => 'Asignaturas a Inscribir',
             'anio' => 'Año'

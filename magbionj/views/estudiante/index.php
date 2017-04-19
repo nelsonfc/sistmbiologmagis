@@ -118,24 +118,22 @@ Modal::end();
         ],
 
         ['class' => 'kartik\grid\ActionColumn',
-            'template' => '{view} {update} {inscribir}',
+            'template' => '{view} {update} {inscribir} {misasignaturas}',
             'buttons' => [
                 'view' => function ($url, $model) {
                     return Html::a(Yii::t('app', '<span class="glyphicon glyphicon-eye-open"></span>&nbsp'), $url, ['class' => 'modalButton2']);
                 },
                 'update' => function ($url, $model) {
                     return Html::a(Yii::t('app', '<span class="glyphicon glyphicon-pencil"></span>'), $url, ['class' => 'modalButton']);
-                    /* Html::a('<span class="glyphicon glyphicon-pencil"></span>', $url, [
-                      'id' => 'modalButton','title' => Yii::t('yii', 'Modificar'), 'data-toggle' => 'modal',
-                      'data-target' => '#modaleditardocente', 'url' => 'javascript:void(0);'
-                      ]); */
+
                 },
                 'inscribir' => function ($url, $model) {
         return Html::a(Yii::t('app', '<span class="glyphicon glyphicon-book"></span>'), ['asignatura-inscrita/create', 'id' => $model->id_estudiante],['class' => 'modalButton6']);
-        /* Html::a('<span class="glyphicon glyphicon-pencil"></span>', $url, [
-          'id' => 'modalButton','title' => Yii::t('yii', 'Modificar'), 'data-toggle' => 'modal',
-          'data-target' => '#modaleditardocente', 'url' => 'javascript:void(0);'
-          ]); */
+
+    },
+    'misasignaturas' => function ($url, $model) {
+        return Html::a(Yii::t('app', '<span class="glyphicon glyphicon-book"></span>'), ['asignatura-inscrita/index', 'id' => $model->id_estudiante],['class' => 'modalButton10']);
+
     }
             ]
         ],];

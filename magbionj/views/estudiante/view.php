@@ -142,7 +142,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
         ?>
         <div class="box-body">
-            <div class='tabs-x tabs-left tab-bordered tabs-krajee' style="margin: 0px 40px 40px 40px;">
+            <div class='tabs-x tabs-left tab-bordered tabs-krajee'>
                 <ul id="myTab-<?php echo $model->id_estudiante ?>" class="nav nav-tabs" role="tablist">
                     <?php
                     $j = 0;

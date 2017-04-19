@@ -33,14 +33,16 @@ class AsignaturaInscritaController extends Controller
      * Lists all AsignaturaInscrita models.
      * @return mixed
      */
-    public function actionIndex()
+    public function actionIndex($id)
     {
         $searchModel = new AsignaturaInscritaSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams, $id);
+        $asignaturas = AsignaturaInscrita::find()->where(['estudiante_id_estudiante' => $id])->all();
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'id' => $id,
+            'a_i' => $asignaturas
         ]);
     }
 
@@ -98,10 +100,11 @@ class AsignaturaInscritaController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id_asignatura_inscrita]);
+        if (Yii::$app->request->isAjax  && $model->load(Yii::$app->request->post())) {
+            \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+            return ['success' => $model->save()];
         } else {
-            return $this->render('update', [
+            return $this->renderAjax('update', [
                 'model' => $model,
             ]);
         }

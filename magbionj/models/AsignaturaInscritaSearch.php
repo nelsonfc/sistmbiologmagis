@@ -38,9 +38,9 @@ class AsignaturaInscritaSearch extends AsignaturaInscrita
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
+    public function search($params, $id)
     {
-        $query = AsignaturaInscrita::find();
+        $query = AsignaturaInscrita::find()->where(['estudiante_id_estudiante' => $id]);
 
         // add conditions that should always apply here
 
