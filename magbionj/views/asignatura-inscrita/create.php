@@ -12,6 +12,7 @@ $this->title = 'Inscribir Asignaturas';
 
     <?= $this->render('_form', [
         'model' => $model,
+        'id' => $id
     ]) ?>
 
 </div>

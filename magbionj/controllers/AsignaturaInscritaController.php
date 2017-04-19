@@ -65,20 +65,23 @@ class AsignaturaInscritaController extends Controller
     {
         $model = new AsignaturaInscrita();
 
-        if ($model->load(Yii::$app->request->post())) {
+        if (Yii::$app->request->isAjax  && $model->load(Yii::$app->request->post())) {
+            \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
             $asignaturas = $model->asignatura_disponible_id_asignatura_disponible;
+            $guarde = false;
             foreach ($asignaturas as $asignatura){
                 $asig = new AsignaturaInscrita();
                 $asig->estudiante_id_estudiante = $id;
                 $asig->calificacion = 0;
                 $asig->asignatura_disponible_id_asignatura_disponible = $asignatura;
                 $asig->save();
+                $guarde = true;
             }
-            $model->save();
-            return $this->redirect(['index']);
+            return ['success' => $guarde];
         } else {
-            return $this->render('create', [
+            return $this->renderAjax('create', [
                 'model' => $model,
+                'id' => $id
             ]);
         }
     }
@@ -118,9 +121,17 @@ class AsignaturaInscritaController extends Controller
     public function actionAsignaturas() {
         $anio = $_POST['anio'];
         $semestre = $_POST['semestre'];
+        $id  = $_POST['id'];
         $asignaturas_seleccionados = '';
         if(isset($_POST['asignaturas'])){
             $asignaturas_seleccionados = $_POST['asignaturas'];
+        }
+        $asig_inscritas = \app\models\AsignaturaInscrita::find()->where(['estudiante_id_estudiante' => $id])->all();
+        $asignaturas[0] = '';
+        $i = 1;
+        foreach ($asig_inscritas as $asig){
+            $asignaturas[$i] = $asig->asignatura_disponible_id_asignatura_disponible;
+            $i++;
         }
         $opciones = \app\models\AsignaturaDisponible::find()->where(['anio' => $anio])->andWhere(['semestre' => $semestre])->all();
         foreach ($opciones as $opcion) {
@@ -133,8 +144,9 @@ class AsignaturaInscritaController extends Controller
                 }
             }
             if ($i == 0) {
-                echo utf8_encode('<option value="' . $opcion->id_asignatura_disponible . '">' . utf8_decode(\app\models\Asignatura::findOne($opcion->asignatura_id_asignatura)->nombre) . '</option>');
-
+                if(!in_array($opcion->id_asignatura_disponible, $asignaturas)) {
+                    echo utf8_encode('<option value="' . $opcion->id_asignatura_disponible . '">' . utf8_decode(\app\models\Asignatura::findOne($opcion->asignatura_id_asignatura)->nombre) . '</option>');
+                }
             }
         }
     }

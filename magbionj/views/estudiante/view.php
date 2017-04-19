@@ -2,7 +2,9 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
-
+use app\models\Asignatura;
+use app\models\AsignaturaDisponible;
+use app\models\AsignaturaInscrita;
 /* @var $this yii\web\View */
 /* @var $model app\models\Estudiante */
 
@@ -81,7 +83,7 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
         <!-- /.box-body -->
         <div class="box-header with-border">
-            <h3 class="box-title">Antecedentes Académicos</h3>
+            <h3 class="box-title">Antecedentes Generales</h3>
         </div>
 
         <div class="box-body">
@@ -123,6 +125,53 @@ $this->params['breadcrumbs'][] = $this->title;
                 </div>
 
             </div>
+        </div>
+        <div class="box-header with-border">
+            <h3 class="box-title">Asignaturas Inscritas</h3>
+        </div>
+
+        <div class="box-body">
+            <table class="table table-hover table-bordered">
+                <thead>
+                <tr class="encabezadotabla nopadding inf">
+                    <th class="center inf">Año</th>
+                    <th class="center inf">Semestre</th>
+                    <th class="center inf">Código</th>
+                    <th class="center inf">Asignatura</th>
+                    <th class="text-center">Calificación</th>
+                    <th class="text-center">Estado</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="inf">
+                    <?php
+                    $asignaturas = AsignaturaInscrita::find()->where(['estudiante_id_estudiante' => $model->id_estudiante])->all();
+                    foreach($asignaturas as $asignatura){
+                    ?>
+                    <td class="center inf"><?php echo AsignaturaDisponible::findOne($asignatura->asignatura_disponible_id_asignatura_disponible)->anio; ?></td>
+                    <td class="center inf"><?php echo AsignaturaDisponible::findOne($asignatura->asignatura_disponible_id_asignatura_disponible)->semestre; ?></td>
+                    <td class="center inf"><?php echo Asignatura::findOne(\app\models\AsignaturaDisponible::findOne($asignatura->asignatura_disponible_id_asignatura_disponible)->asignatura_id_asignatura)->codigo;  ?></td>
+                    <td class="left inf"><?php echo Asignatura::findOne(\app\models\AsignaturaDisponible::findOne($asignatura->asignatura_disponible_id_asignatura_disponible)->asignatura_id_asignatura)->nombre;  ?></td>
+                    <td class="center elementoaocultar "> <?php if($asignatura->calificacion == 0){
+                            echo '-';
+                        }else{
+                            echo $asignatura->calificacion;
+                        } ?></td>
+                    <td class="center elementoaocultar "> <?php
+                        if($asignatura->calificacion == 0){
+                            echo '<span class="label label-default" style="border-radius: 10px;">Inscrita</span>';
+                        }
+                        if($asignatura->calificacion >= 40 && $asignatura->calificacion != 0){
+                            echo '<span class="label label-success" style="border-radius: 10px;">Aprobado</span>';
+                        }
+                        if($asignatura->calificacion < 40 && $asignatura->calificacion != 0){
+                            echo '<span class="label label-danger" style="border-radius: 10px;">Reprobado</span>';
+                        }
+                        ?></td>
+                </tr><tr class="inf">
+                    <?php } ?>
+                </tbody>
+            </table>
         </div>
 
     </div>

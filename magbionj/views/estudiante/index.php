@@ -21,6 +21,16 @@ echo "<div class='modalContent'></div>";
 
 Modal::end();
 Modal::begin([
+    'header' => '<h4 class="modal-title">Inscribir Asignaturas</h4>',
+    'id' => 'modalinscribir',
+    'class' => 'modal',
+    'closeButton' => ['onclick' => "$('div').removeClass('modal-backdrop fade in');"],
+    'size' => 'modal-lg',
+]);
+echo "<div class='modalContent'></div>";
+
+Modal::end();
+Modal::begin([
     'id' => 'modalver',
     'class' => 'modal',
     'closeButton' => false,
@@ -121,7 +131,7 @@ Modal::end();
                       ]); */
                 },
                 'inscribir' => function ($url, $model) {
-        return Html::a(Yii::t('app', '<span class="glyphicon glyphicon-book"></span>'), ['asignatura-inscrita/create', 'id' => $model->id_estudiante],[]);
+        return Html::a(Yii::t('app', '<span class="glyphicon glyphicon-book"></span>'), ['asignatura-inscrita/create', 'id' => $model->id_estudiante],['class' => 'modalButton6']);
         /* Html::a('<span class="glyphicon glyphicon-pencil"></span>', $url, [
           'id' => 'modalButton','title' => Yii::t('yii', 'Modificar'), 'data-toggle' => 'modal',
           'data-target' => '#modaleditardocente', 'url' => 'javascript:void(0);'
@@ -223,6 +233,23 @@ $this->registerJs('$(document).on("ready pjax:success", function() {
         $("#kvFileinputModal").removeClass("modal-backdrop fade in");
        var tagname = $(this)[0].tagName;      
        $("#modalingresar").modal("show")
+                  .find(".modalContent")
+                  .load($(this).attr("href"));
+       return false;   
+   });
+});')
+
+;
+?>
+<?php
+$this->registerJs('$(document).on("ready pjax:success", function() {
+   $(".modal").removeAttr("tabindex");
+    $(".modalButton6").click(function(){
+    
+        $("#kvFileinputModal").empty();
+        $("#kvFileinputModal").removeClass("modal-backdrop fade in");
+       var tagname = $(this)[0].tagName;      
+       $("#modalinscribir").modal("show")
                   .find(".modalContent")
                   .load($(this).attr("href"));
        return false;   

@@ -49,7 +49,7 @@ class AsignaturaInscrita extends \yii\db\ActiveRecord
             'id_asignatura_inscrita' => 'Id Asignatura Inscrita',
             'calificacion' => 'Calificacion',
             'estudiante_id_estudiante' => 'Estudiante Id Estudiante',
-            'asignatura_disponible_id_asignatura_disponible' => 'Asignatura Disponible Id Asignatura Disponible',
+            'asignatura_disponible_id_asignatura_disponible' => 'Asignaturas a Inscribir',
             'anio' => 'Año'
         ];
     }
