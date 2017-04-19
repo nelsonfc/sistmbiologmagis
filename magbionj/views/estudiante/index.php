@@ -118,7 +118,7 @@ Modal::end();
         ],
 
         ['class' => 'kartik\grid\ActionColumn',
-            'template' => '{view}{update}{inscribir}',
+            'template' => '{view} {update} {inscribir}',
             'buttons' => [
                 'view' => function ($url, $model) {
                     return Html::a(Yii::t('app', '<span class="glyphicon glyphicon-eye-open"></span>&nbsp'), $url, ['class' => 'modalButton2']);

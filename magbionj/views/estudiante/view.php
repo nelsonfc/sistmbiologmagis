@@ -129,8 +129,42 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="box-header with-border">
             <h3 class="box-title">Asignaturas Inscritas</h3>
         </div>
+        <?php
+        $asignaturas = AsignaturaInscrita::find()->where(['estudiante_id_estudiante' => $model->id_estudiante])->all();
+        $asignaturas_aux[0] = '';
+        $i = 1;
+        $anio_semestre[0][0] = '';
+        foreach ($asignaturas as $asig){
+            $anio_semestre[AsignaturaDisponible::findOne($asig->asignatura_disponible_id_asignatura_disponible)->anio][AsignaturaDisponible::findOne($asig->asignatura_disponible_id_asignatura_disponible)->semestre] =1;
+            $asignaturas_aux[$i] = $asig->asignatura_disponible_id_asignatura_disponible;
+            $i++;
+        }
 
+        ?>
         <div class="box-body">
+            <div class='tabs-x tabs-left tab-bordered tabs-krajee' style="margin: 0px 40px 40px 40px;">
+                <ul id="myTab-<?php echo $model->id_estudiante ?>" class="nav nav-tabs" role="tablist">
+                    <?php
+                    $j = 0;
+                    for($i = $model->anio_ingreso; $i <= date("Y"); $i++){
+                        if(isset($anio_semestre[$i][1])){ ?>
+                    <li <?php if($j== 0){echo 'class="active"'; $j++;}?>><a href="#home-<?php echo $i."1" ?>" role="tab" data-toggle="tab"><?php echo $i."-1"; ?></a></li>
+                    <?php }
+                        if(isset($anio_semestre[$i][2])){
+                            ?>
+                            <li <?php if($j== 0){echo 'class="active"';$j++;}?>><a href="#home-<?php echo $i."2" ?>" role="tab" data-toggle="tab"><?php echo $i."-2"; ?></a></li>
+                            <?php
+                        }
+                    }?>
+                </ul>
+                <div id="myTabContent-<?php echo $model->id_estudiante; ?>" class="tab-content">
+                <?php
+                    $j = 0;
+                    for($i = $model->anio_ingreso; $i <= date("Y"); $i++){
+                        if(isset($anio_semestre[$i][1])) { ?>
+
+
+                    <div class="tab-pane fade<?php if($j == 0){echo " in active"; $j++;} ?>" id="home-<?php echo $i."1" ?>">
             <table class="table table-hover table-bordered">
                 <thead>
                 <tr class="encabezadotabla nopadding inf">
@@ -145,36 +179,93 @@ $this->params['breadcrumbs'][] = $this->title;
                 <tbody>
                 <tr class="inf">
                     <?php
-                    $asignaturas = AsignaturaInscrita::find()->where(['estudiante_id_estudiante' => $model->id_estudiante])->all();
                     foreach($asignaturas as $asignatura){
+                    if (AsignaturaDisponible::findOne($asignatura->asignatura_disponible_id_asignatura_disponible)->anio == $i && AsignaturaDisponible::findOne($asignatura->asignatura_disponible_id_asignatura_disponible)->semestre == 1){
                     ?>
                     <td class="center inf"><?php echo AsignaturaDisponible::findOne($asignatura->asignatura_disponible_id_asignatura_disponible)->anio; ?></td>
                     <td class="center inf"><?php echo AsignaturaDisponible::findOne($asignatura->asignatura_disponible_id_asignatura_disponible)->semestre; ?></td>
-                    <td class="center inf"><?php echo Asignatura::findOne(\app\models\AsignaturaDisponible::findOne($asignatura->asignatura_disponible_id_asignatura_disponible)->asignatura_id_asignatura)->codigo;  ?></td>
-                    <td class="left inf"><?php echo Asignatura::findOne(\app\models\AsignaturaDisponible::findOne($asignatura->asignatura_disponible_id_asignatura_disponible)->asignatura_id_asignatura)->nombre;  ?></td>
-                    <td class="center elementoaocultar "> <?php if($asignatura->calificacion == 0){
+                    <td class="center inf"><?php echo Asignatura::findOne(\app\models\AsignaturaDisponible::findOne($asignatura->asignatura_disponible_id_asignatura_disponible)->asignatura_id_asignatura)->codigo; ?></td>
+                    <td class="left inf"><?php echo Asignatura::findOne(\app\models\AsignaturaDisponible::findOne($asignatura->asignatura_disponible_id_asignatura_disponible)->asignatura_id_asignatura)->nombre; ?></td>
+                    <td class="center elementoaocultar "> <?php if ($asignatura->calificacion == 0) {
                             echo '-';
-                        }else{
+                        } else {
                             echo $asignatura->calificacion;
                         } ?></td>
                     <td class="center elementoaocultar "> <?php
-                        if($asignatura->calificacion == 0){
+                        if ($asignatura->calificacion == 0) {
                             echo '<span class="label label-default" style="border-radius: 10px;">Inscrita</span>';
                         }
-                        if($asignatura->calificacion >= 40 && $asignatura->calificacion != 0){
+                        if ($asignatura->calificacion >= 40 && $asignatura->calificacion != 0) {
                             echo '<span class="label label-success" style="border-radius: 10px;">Aprobado</span>';
                         }
-                        if($asignatura->calificacion < 40 && $asignatura->calificacion != 0){
+                        if ($asignatura->calificacion < 40 && $asignatura->calificacion != 0) {
                             echo '<span class="label label-danger" style="border-radius: 10px;">Reprobado</span>';
                         }
                         ?></td>
-                </tr><tr class="inf">
-                    <?php } ?>
+                </tr>
+                <tr class="inf">
+                    <?php }
+                    }?>
                 </tbody>
             </table>
+                    </div>
+                        <?php }
+
+                                if(isset($anio_semestre[$i][2])){
+                                ?>
+                                <div class="tab-pane fade<?php if($j == 0){echo " in active"; $j++;} ?>" id="home-<?php echo $i."2" ?>">
+                                    <table class="table table-hover table-bordered">
+                                        <thead>
+                                        <tr class="encabezadotabla nopadding inf">
+                                            <th class="center inf">Año</th>
+                                            <th class="center inf">Semestre</th>
+                                            <th class="center inf">Código</th>
+                                            <th class="center inf">Asignatura</th>
+                                            <th class="text-center">Calificación</th>
+                                            <th class="text-center">Estado</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr class="inf">
+                                            <?php
+                                            foreach($asignaturas as $asignatura) {
+                                                if (AsignaturaDisponible::findOne($asignatura->asignatura_disponible_id_asignatura_disponible)->anio == $i && AsignaturaDisponible::findOne($asignatura->asignatura_disponible_id_asignatura_disponible)->semestre == 2) {
+                                                    ?>
+                                                    <td class="center inf"><?php echo AsignaturaDisponible::findOne($asignatura->asignatura_disponible_id_asignatura_disponible)->anio; ?></td>
+                                                    <td class="center inf"><?php echo AsignaturaDisponible::findOne($asignatura->asignatura_disponible_id_asignatura_disponible)->semestre; ?></td>
+                                                    <td class="center inf"><?php echo Asignatura::findOne(\app\models\AsignaturaDisponible::findOne($asignatura->asignatura_disponible_id_asignatura_disponible)->asignatura_id_asignatura)->codigo; ?></td>
+                                                    <td class="left inf"><?php echo Asignatura::findOne(\app\models\AsignaturaDisponible::findOne($asignatura->asignatura_disponible_id_asignatura_disponible)->asignatura_id_asignatura)->nombre; ?></td>
+                                                    <td class="center elementoaocultar "> <?php if ($asignatura->calificacion == 0) {
+                                                            echo '-';
+                                                        } else {
+                                                            echo $asignatura->calificacion;
+                                                        } ?></td>
+                                                    <td class="center elementoaocultar "> <?php
+                                                        if ($asignatura->calificacion == 0) {
+                                                            echo '<span class="label label-default" style="border-radius: 10px;">Inscrita</span>';
+                                                        }
+                                                        if ($asignatura->calificacion >= 40 && $asignatura->calificacion != 0) {
+                                                            echo '<span class="label label-success" style="border-radius: 10px;">Aprobado</span>';
+                                                        }
+                                                        if ($asignatura->calificacion < 40 && $asignatura->calificacion != 0) {
+                                                            echo '<span class="label label-danger" style="border-radius: 10px;">Reprobado</span>';
+                                                        }
+                                                        ?></td>
+                                                    </tr>
+                                                    <tr class="inf">
+                                                <?php }
+
+                                            }?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <?php
+                            }
+
+                    }?>
+                </div>
         </div>
 
-    </div>
     </div>
     <div class="modal-footer">
         <div class="form-group">
@@ -182,6 +273,8 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
 
+</div>
+    </div>
 </div>
 <?php
 function getPuntosRut( $rut ){

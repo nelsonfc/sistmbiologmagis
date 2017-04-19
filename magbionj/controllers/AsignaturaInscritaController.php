@@ -70,12 +70,14 @@ class AsignaturaInscritaController extends Controller
             $asignaturas = $model->asignatura_disponible_id_asignatura_disponible;
             $guarde = false;
             foreach ($asignaturas as $asignatura){
-                $asig = new AsignaturaInscrita();
-                $asig->estudiante_id_estudiante = $id;
-                $asig->calificacion = 0;
-                $asig->asignatura_disponible_id_asignatura_disponible = $asignatura;
-                $asig->save();
-                $guarde = true;
+                if(count(AsignaturaInscrita::find()->where(['estudiante_id_estudiante' => $id])->andWhere(['asignatura_disponible_id_asignatura_disponible' => $asignatura])->all()) == 0) {
+                    $asig = new AsignaturaInscrita();
+                    $asig->estudiante_id_estudiante = $id;
+                    $asig->calificacion = 0;
+                    $asig->asignatura_disponible_id_asignatura_disponible = $asignatura;
+                    $asig->save();
+                    $guarde = true;
+                }
             }
             return ['success' => $guarde];
         } else {
