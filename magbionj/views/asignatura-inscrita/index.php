@@ -70,6 +70,7 @@ Modal::end();
                 },
             ]
         ]];
+
     echo GridView::widget([
         'id' => 'kv-grid-demo',
         'dataProvider'=>$dataProvider,
@@ -81,7 +82,11 @@ Modal::end();
         'pjax'=>true, // pjax is set to always true for this demo
         // set your toolbar
         'toolbar'=> [
-            ['content' => Html::a(Yii::t('app', '<i class="glyphicon glyphicon-plus"></i>'), ['create', 'id' => $id], ['class' => 'btn btn-primary modalButton3'])
+            ['content' =>
+                    Html::button('Volver a Listado de Estudiantes', ['class' => 'btn btn-success' ,'style' => 'margin-bottom: 10px;', 'onclick' => 'window.close()']),],
+            ['content' =>
+
+                Html::a(Yii::t('app', '<i class="glyphicon glyphicon-plus"></i>'), ['create', 'id' => $id], ['class' => 'btn btn-primary modalButton3'])
             ],
             '{export}',
             '{toggleData}',

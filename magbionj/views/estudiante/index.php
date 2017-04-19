@@ -132,11 +132,12 @@ Modal::end();
 
     },
     'misasignaturas' => function ($url, $model) {
-        return Html::a(Yii::t('app', '<span class="glyphicon glyphicon-book"></span>'), ['asignatura-inscrita/index', 'id' => $model->id_estudiante],['class' => 'modalButton10']);
+        return Html::a(Yii::t('app', '<span class="fa fa-edit"></span>'), ['asignatura-inscrita/index', 'id' => $model->id_estudiante],['class' => 'modalButton10','id' => 'descarga' ,'data-pjax' => '0', 'target' => '_blank']);
 
     }
             ]
         ],];
+
     echo GridView::widget([
         'id' => 'kv-grid-demo',
         'dataProvider'=>$dataProvider,
