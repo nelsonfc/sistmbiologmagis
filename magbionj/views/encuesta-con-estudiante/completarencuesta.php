@@ -15,9 +15,9 @@ $this->title = 'Create Encuesta Con Estudiante';
 
     <?= $this->render('_form3', [
         'content' => $content,
-        'model3' => $model3,
         'model' => $model,
-        'content' => $content
+
+
     ]) ?>
 
 </div>

@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\models\PreguntaNumerica;
 use app\models\RespuestaNumerica;
+use app\models\RespuestaTexto;
 use Codeception\Module\Yii2;
 use Yii;
 use app\models\EncuestaConEstudiante;
@@ -112,49 +113,63 @@ class EncuestaConEstudianteController extends Controller
     {
         $model2 = new RespuestaNumerica();
         $model = [new RespuestaNumerica];
-        $model3 = new EncuestaConEstudiante();
+        $model3 = new RespuestaTexto();
+        if($idpaso==7) {
+            if ($model3->load(Yii::$app->request->post())){
+                $model3->id_encuesta_con_estudiante = $idece;
+                $model3->id_pregunta_texto=14;
+                if ($model3->save()){
+
+                    return $this->redirect(['index']);
 
 
-        if (Model::loadMultiple($model, Yii::$app->request->post())) {
-            $model = Model::createMultiple(RespuestaNumerica::classname());
-            Model::loadMultiple($model, Yii::$app->request->post());
-            $valid = true;
-            if ($valid) {
-                $transaction = \Yii::$app->db->beginTransaction();
-                try {
-                    foreach ($model as $modelAddress) {
-                        $modelo = new RespuestaNumerica();
-                        $modelo->valor_respuesta = $modelAddress->valor_respuesta;
-                        $modelo->id_ece = $idece;
-                        $modelo->id_preguntanumerica = $modelAddress->id_preguntanumerica;
-                        if (!($flag = $modelo->save(false))) {
-                            $transaction->rollBack();
-                            break;
-                        }
-                    }
 
-                    if ($flag) {
-                        $transaction->commit();
-                        $idpaso+=1;
-                        return $this->redirect(['completarencuesta','model'=> $model , 'model2'=> $model2, 'model3'=>$model3 ,'id'=> $id ,'idece'=> $idece, 'idpaso'=>$idpaso, ]);
-                    }
-                } catch (Exception $e) {
-                    $transaction->rollBack();
+                }else{
+                    return $this->render('completarencuesta', [
+                        'model' => $model,
+                        'content' => $this->renderPartial('encuestatemauno', ['model' => $model, 'model3' => $model3, 'model2' => $model2, 'id' => $id, 'idece' => $idece, 'idpaso' => $idpaso]),
+
+                    ]);
                 }
-
             }
-        } else {
-            return $this->render('completarencuesta', [
-                'model' => $model,
-                'model3' => $model3,
-                'content' => $this->renderPartial('view', [
-                    'model' => $this->findModel($id),
-                ]),
-                'content' => $this->renderPartial('encuestatemauno', ['model'=> $model , 'model2'=> $model2, 'model3'=>$model3 ,'idencuesta'=> $id ,'idece'=> $idece, 'idpaso'=>$idpaso, ]),
 
-            ]);
+        }else {
+            if (Model::loadMultiple($model, Yii::$app->request->post())) {
+                $model = Model::createMultiple(RespuestaNumerica::classname());
+                Model::loadMultiple($model, Yii::$app->request->post());
+                $valid = true;
+                if ($valid) {
+                    $transaction = \Yii::$app->db->beginTransaction();
+                    try {
+                        foreach ($model as $modelAddress) {
+                            $modelo = new RespuestaNumerica();
+                            $modelo->valor_respuesta = $modelAddress->valor_respuesta;
+                            $modelo->id_ece = $idece;
+                            $modelo->id_preguntanumerica = $modelAddress->id_preguntanumerica;
+                            if (!($flag = $modelo->save(false))) {
+                                $transaction->rollBack();
+                                break;
+                            }
+                        }
+
+                        if ($flag) {
+                            $transaction->commit();
+                            $idpaso += 1;
+                            return $this->redirect(['completarencuesta', 'id' => $id, 'idece' => $idece, 'idpaso' => $idpaso]);
+                        }
+                    } catch (Exception $e) {
+                        $transaction->rollBack();
+                    }
+
+                }
+            } else {
+                return $this->render('completarencuesta', [
+                    'model' => $model,
+                    'content' => $this->renderPartial('encuestatemauno', ['model' => $model, 'model3' => $model3, 'model2' => $model2, 'id' => $id, 'idece' => $idece, 'idpaso' => $idpaso]),
+
+                ]);
+            }
         }
-
     }
     public function actionEncuestatemauno($id, $idece){
 
@@ -170,7 +185,7 @@ class EncuestaConEstudianteController extends Controller
                         foreach ($model as $modelAddress) {
                             $modelo = new RespuestaNumerica();
                             $modelo->valor_respuesta = $modelAddress->valor_respuesta;
-                            $modelo->id_ece = 37;
+                            $modelo->id_ece = $idece;
                             $modelo->id_preguntanumerica = $modelAddress->id_preguntanumerica;
                             if (! ($flag = $modelo->save(false))) {
                                 $transaction->rollBack();
