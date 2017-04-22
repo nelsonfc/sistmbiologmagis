@@ -80,6 +80,14 @@ class EncuestaConEstudianteController extends Controller
         }
     }
 
+    public function actionEncuestafinalizada()
+    {
+
+
+        return $this->render('encuestafinalizada');
+
+    }
+
     public function actionCreate2()
     {
         $model = new EncuestaConEstudiante();
@@ -95,11 +103,11 @@ class EncuestaConEstudianteController extends Controller
                 $model->semestre = 1;
             }
             $model->id_estudiante = 1;
-            $model->estado = 1;
+            $model->estado = 2;
 
 
             if ($model->save()) {
-                return $this->redirect(['completarencuesta','id' => $model->id_encuesta, 'idece'=> $model->id_ece, 'idpaso'=> 1]);
+                return $this->redirect(['completarencuesta', 'id' => $model->id_encuesta, 'idece' => $model->id_ece, 'idpaso' => 1]);
             }
         } else {
             return $this->render('create2', [
@@ -111,20 +119,98 @@ class EncuestaConEstudianteController extends Controller
 
     public function actionCompletarencuesta($id, $idece, $idpaso)
     {
-        $model2 = new RespuestaNumerica();
-        $model = [new RespuestaNumerica];
-        $model3 = new RespuestaTexto();
-        if($idpaso==7) {
-            if ($model3->load(Yii::$app->request->post())){
-                $model3->id_encuesta_con_estudiante = $idece;
-                $model3->id_pregunta_texto=14;
-                if ($model3->save()){
+        if ($this->findModel($idece)->estado != 1) {
+            $model2 = new RespuestaNumerica();
+            $model = [new RespuestaNumerica];
+            $model3 = new RespuestaTexto();
+            if (null != RespuestaNumerica::find()->where(['=', 'id_ece', $idece])->andWhere(['=', 'id_preguntanumerica', 37])->all() && $idpaso == 1) {
+                $idpaso += 1;
+                return $this->redirect(['completarencuesta', 'id' => $id, 'idece' => $idece, 'idpaso' => $idpaso]);
 
-                    return $this->redirect(['index']);
+            }
+            if (null != RespuestaNumerica::find()->where(['=', 'id_ece', $idece])->andWhere(['=', 'id_preguntanumerica', 44])->all() && $idpaso == 2) {
+                $idpaso += 1;
+                return $this->redirect(['completarencuesta', 'id' => $id, 'idece' => $idece, 'idpaso' => $idpaso]);
+
+            }
+            if (null != RespuestaNumerica::find()->where(['=', 'id_ece', $idece])->andWhere(['=', 'id_preguntanumerica', 50])->all() && $idpaso == 3) {
+                $idpaso += 1;
+                return $this->redirect(['completarencuesta', 'id' => $id, 'idece' => $idece, 'idpaso' => $idpaso]);
+
+            }
+            if(null != RespuestaNumerica::find()->where(['=','id_ece',$idece])->andWhere(['=','id_preguntanumerica',54])->all()&&$idpaso==4){
+                $idpaso+=1;
+                return $this->redirect(['completarencuesta', 'id' => $id, 'idece' => $idece, 'idpaso' => $idpaso]);
+
+            }
+            if(null != RespuestaNumerica::find()->where(['=','id_ece',$idece])->andWhere(['=','id_preguntanumerica',57])->all()&&$idpaso==5){
+                $idpaso+=1;
+                return $this->redirect(['completarencuesta', 'id' => $id, 'idece' => $idece, 'idpaso' => $idpaso]);
+
+            }
+            if(null != RespuestaNumerica::find()->where(['=','id_ece',$idece])->andWhere(['=','id_preguntanumerica',58])->all()&&$idpaso==6){
+                $idpaso+=1;
+                return $this->redirect(['completarencuesta', 'id' => $id, 'idece' => $idece, 'idpaso' => $idpaso]);
+
+            }
+            if ($idpaso == 7) {
+
+                if ($model3->load(Yii::$app->request->post())) {
+                    $model3->id_encuesta_con_estudiante = $idece;
+                    $model3->id_pregunta_texto = 14;
+                    if ($model3->save()) {
+                        $model4 = $this->findModel($idece);
+
+                        $model4->estado = 1;
+                        $model4->save();
+
+                        return $this->redirect(['index']);
 
 
+                    } else {
+                        return $this->render('completarencuesta', [
+                            'model' => $model,
+                            'content' => $this->renderPartial('encuestatemauno', ['model' => $model, 'model3' => $model3, 'model2' => $model2, 'id' => $id, 'idece' => $idece, 'idpaso' => $idpaso]),
 
-                }else{
+                        ]);
+                    }
+                }
+                return $this->render('completarencuesta', [
+                    'model' => $model,
+                    'content' => $this->renderPartial('encuestatemauno', ['model' => $model, 'model3' => $model3, 'model2' => $model2, 'id' => $id, 'idece' => $idece, 'idpaso' => $idpaso]),
+
+                ]);
+
+            } else {
+                if (Model::loadMultiple($model, Yii::$app->request->post())) {
+                    $model = Model::createMultiple(RespuestaNumerica::classname());
+                    Model::loadMultiple($model, Yii::$app->request->post());
+                    $valid = true;
+                    if ($valid) {
+                        $transaction = \Yii::$app->db->beginTransaction();
+                        try {
+                            foreach ($model as $modelAddress) {
+                                $modelo = new RespuestaNumerica();
+                                $modelo->valor_respuesta = $modelAddress->valor_respuesta;
+                                $modelo->id_ece = $idece;
+                                $modelo->id_preguntanumerica = $modelAddress->id_preguntanumerica;
+                                if (!($flag = $modelo->save(false))) {
+                                    $transaction->rollBack();
+                                    break;
+                                }
+                            }
+
+                            if ($flag) {
+                                $transaction->commit();
+                                $idpaso += 1;
+                                return $this->redirect(['completarencuesta', 'id' => $id, 'idece' => $idece, 'idpaso' => $idpaso]);
+                            }
+                        } catch (Exception $e) {
+                            $transaction->rollBack();
+                        }
+
+                    }
+                } else {
                     return $this->render('completarencuesta', [
                         'model' => $model,
                         'content' => $this->renderPartial('encuestatemauno', ['model' => $model, 'model3' => $model3, 'model2' => $model2, 'id' => $id, 'idece' => $idece, 'idpaso' => $idpaso]),
@@ -132,46 +218,11 @@ class EncuestaConEstudianteController extends Controller
                     ]);
                 }
             }
-
-        }else {
-            if (Model::loadMultiple($model, Yii::$app->request->post())) {
-                $model = Model::createMultiple(RespuestaNumerica::classname());
-                Model::loadMultiple($model, Yii::$app->request->post());
-                $valid = true;
-                if ($valid) {
-                    $transaction = \Yii::$app->db->beginTransaction();
-                    try {
-                        foreach ($model as $modelAddress) {
-                            $modelo = new RespuestaNumerica();
-                            $modelo->valor_respuesta = $modelAddress->valor_respuesta;
-                            $modelo->id_ece = $idece;
-                            $modelo->id_preguntanumerica = $modelAddress->id_preguntanumerica;
-                            if (!($flag = $modelo->save(false))) {
-                                $transaction->rollBack();
-                                break;
-                            }
-                        }
-
-                        if ($flag) {
-                            $transaction->commit();
-                            $idpaso += 1;
-                            return $this->redirect(['completarencuesta', 'id' => $id, 'idece' => $idece, 'idpaso' => $idpaso]);
-                        }
-                    } catch (Exception $e) {
-                        $transaction->rollBack();
-                    }
-
-                }
-            } else {
-                return $this->render('completarencuesta', [
-                    'model' => $model,
-                    'content' => $this->renderPartial('encuestatemauno', ['model' => $model, 'model3' => $model3, 'model2' => $model2, 'id' => $id, 'idece' => $idece, 'idpaso' => $idpaso]),
-
-                ]);
-            }
         }
     }
-    public function actionEncuestatemauno($id, $idece){
+
+    public function actionEncuestatemauno($id, $idece)
+    {
 
         $model = [new RespuestaNumerica];
         $model2 = new RespuestaNumerica();
@@ -182,16 +233,16 @@ class EncuestaConEstudianteController extends Controller
             if ($valid) {
                 $transaction = \Yii::$app->db->beginTransaction();
                 try {
-                        foreach ($model as $modelAddress) {
-                            $modelo = new RespuestaNumerica();
-                            $modelo->valor_respuesta = $modelAddress->valor_respuesta;
-                            $modelo->id_ece = $idece;
-                            $modelo->id_preguntanumerica = $modelAddress->id_preguntanumerica;
-                            if (! ($flag = $modelo->save(false))) {
-                                $transaction->rollBack();
-                                break;
-                            }
+                    foreach ($model as $modelAddress) {
+                        $modelo = new RespuestaNumerica();
+                        $modelo->valor_respuesta = $modelAddress->valor_respuesta;
+                        $modelo->id_ece = $idece;
+                        $modelo->id_preguntanumerica = $modelAddress->id_preguntanumerica;
+                        if (!($flag = $modelo->save(false))) {
+                            $transaction->rollBack();
+                            break;
                         }
+                    }
 
                     if ($flag) {
                         $transaction->commit();
@@ -201,7 +252,7 @@ class EncuestaConEstudianteController extends Controller
                 } catch (Exception $e) {
                     $transaction->rollBack();
                 }
-            }else{
+            } else {
             }
         } else {
             return $this->render('encuestatemauno', [

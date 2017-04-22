@@ -293,7 +293,9 @@ use yii\widgets\ActiveForm;
                 3 => [
                     'title' => 'Tema III: Sobre el Entorno de estudio',
                     'icon' => 'glyphicon glyphicon-education',
-                    'content' => "<h3>Tema III: Sobre el Entorno de estudio</h3>" . $content,
+                    'content' => "<h3 class='text-center'>Tema III: Sobre el Entorno de estudio</h3><h4 class='text-center'> Estos componentes se miden segun el grado de satisfaccion, de la siguente manera:</h4>
+<h5 class='text-center'>Leyenda de respuestas</h5>
+<center>1 = exelente 2 = bueno 3 = regular 4 = deficiente 5 = sin respuesta</center>" . $content,
                     'buttons' => [
                         'next' => [
                             'title' => 'Forward',
@@ -465,8 +467,27 @@ use yii\widgets\ActiveForm;
                 4 => [
                     'title' => 'Tema IV: Sobre las Bibliotecas',
                     'icon' => 'glyphicon glyphicon-book',
-                    'content' => "<h3>Tema IV: Sobre las Bibliotecas</h3>" . $content,
+                    'content' => "<h3 class='text-center'>Tema IV: Sobre las Bibliotecas</h3><h4 class='text-center'> Estos componentes se miden segun el grado de satisfaccion, de la siguente manera:</h4>
+<h5 class='text-center'>Leyenda de respuestas</h5>
+<center>1 = exelente 2 = bueno 3 = regular 4 = deficiente 5 = sin respuesta</center>" . $content,
+                    'buttons' => [
+                        'next' => [
+                            'title' => 'Siguiente',
+                            'options' => [
+                                'class' => 'hidden'
+                            ],
+                        ],
+                        'prev' => [
+                            'title' => 'Atras',
+                            'options' => [
+                                'class' => 'hidden'
+                            ],
+                        ],
+
+                    ],
                 ],
+
+
                 5 => [
                     'title' => 'Tema V: Sobre los espacios físicos',
                     'icon' => 'glyphicon glyphicon-tree-deciduous',
@@ -596,7 +617,24 @@ use yii\widgets\ActiveForm;
                 5 => [
                     'title' => 'Tema V: Sobre los espacios físicos',
                     'icon' => 'glyphicon glyphicon-tree-deciduous',
-                    'content' => "<h3>Tema V: Sobre los espacios físicos</h3>" . $content,
+                    'content' => "<h3 class='text-center'>Tema V: Sobre los espacios físicos</h3><h4 class='text-center'> Estos componentes se miden segun el grado de satisfaccion, de la siguente manera:</h4>
+<h5 class='text-center'>Leyenda de respuestas</h5>
+<center>1 = exelente 2 = bueno 3 = regular 4 = deficiente 5 = sin respuesta</center>" . $content,
+                    'buttons' => [
+                        'next' => [
+                            'title' => 'Siguiente',
+                            'options' => [
+                                'class' => 'hidden'
+                            ],
+                        ],
+                        'prev' => [
+                            'title' => 'Atras',
+                            'options' => [
+                                'class' => 'hidden'
+                            ],
+                        ],
+
+                    ],
                 ],
                 6 => [
                     'title' => 'Tema VI: Opinión Global sobre el Programa',
@@ -723,11 +761,43 @@ use yii\widgets\ActiveForm;
                     'content' => "<h3 class='text-center'>Tema V: Sobre los Espacios Físicos</h3><h4 class='text-center'> Usted ya ha respondido estas preguntas y
  sus respuestas ya han sido procesadas
  <br>avance al siguiente paso </h4>" ,
+                    'buttons' => [
+                        'next' => [
+                            'title' => 'Siguiente',
+                            'options' => [
+                                'class' => 'btn btn-success'
+                            ],
+                        ],
+                        'prev' => [
+                            'title' => 'Atras',
+                            'options' => [
+                                'class' => 'btn btn-success'
+                            ]
+                        ],
+
+                    ],
                 ],
                 6 => [
                     'title' => 'Tema VI: Opinión Global sobre el Programa',
                     'icon' => 'glyphicon glyphicon-globe',
-                    'content' => "<h3 class='text-center'>Tema V: Sobre los Espacios Físicos</h3>".$content,
+                    'content' => "<h3 class='text-center'>Tema V: Sobre los Espacios Físicos</h3><h4 class='text-center'> Estos componentes se miden segun el grado de satisfaccion, de la siguente manera:</h4>
+<h5 class='text-center'>Leyenda de respuestas</h5>
+<center>1 = exelente 2 = bueno 3 = regular 4 = deficiente 5 = sin respuesta</center>".$content,
+                    'buttons' => [
+                        'next' => [
+                            'title' => 'Siguiente',
+                            'options' => [
+                                'class' => 'hidden'
+                            ],
+                        ],
+                        'prev' => [
+                            'title' => 'Atras',
+                            'options' => [
+                                'class' => 'hidden'
+                            ],
+                        ],
+
+                    ],
                 ],
                 7 => [
                     'title' => 'Tema VII: Sugerencias y/o Comentarios',
@@ -747,8 +817,7 @@ use yii\widgets\ActiveForm;
 
         <?php ActiveForm::end();
     }
-    if (htmlspecialchars($_GET["idpaso"]) == 7)
-    {
+    if (htmlspecialchars($_GET["idpaso"]) == 7) {
         $form = ActiveForm::begin(); ?>
         <?php
         //if(htmlspecialchars($_GET["idpaso"])    ==1 )
@@ -850,6 +919,21 @@ use yii\widgets\ActiveForm;
                     'content' => "<h3 class='text-center'>Tema V: Sobre los Espacios Físicos</h3><h4 class='text-center'> Usted ya ha respondido estas preguntas y
  sus respuestas ya han sido procesadas
  <br>avance al siguiente paso </h4>" ,
+                    'buttons' => [
+                        'next' => [
+                            'title' => 'Siguiente',
+                            'options' => [
+                                'class' => 'btn btn-success'
+                            ],
+                        ],
+                        'prev' => [
+                            'title' => 'Atras',
+                            'options' => [
+                                'class' => 'btn btn-success'
+                            ]
+                        ],
+
+                    ],
                 ],
                 6 => [
                     'title' => 'Tema VI: Opinión Global sobre el Programa',
@@ -857,11 +941,47 @@ use yii\widgets\ActiveForm;
                     'content' => "<h3 class='text-center'>Tema V: Sobre los Espacios Físicos</h3><h4 class='text-center'> Usted ya ha respondido estas preguntas y
  sus respuestas ya han sido procesadas
  <br>avance al siguiente paso </h4>",
+                    'buttons' => [
+                        'next' => [
+                            'title' => 'Siguiente',
+                            'options' => [
+                                'class' => 'btn btn-success'
+                            ],
+                        ],
+                        'prev' => [
+                            'title' => 'Atras',
+                            'options' => [
+                                'class' => 'btn btn-success'
+                            ]
+                        ],
+
+                    ],
                 ],
                 7 => [
                     'title' => 'Tema VII: Sugerencias y/o Comentarios',
                     'icon' => 'glyphicon glyphicon-comment',
                     'content' => "<h3 class='text-center'>Tema VII: Sugerencias y/o Comentarios".$content,
+                    'buttons' => [
+                        'next' => [
+                            'title' => 'Siguiente',
+                            'options' => [
+                                'class' => 'hidden'
+                            ],
+                        ],
+                        'prev' => [
+                            'title' => 'Atras',
+                            'options' => [
+                                'class' => 'hidden'
+                            ]
+                        ],
+                        'save' => [
+                            'title' => 'Atras',
+                            'options' => [
+                                'class' => 'hidden'
+                            ]
+                        ],
+
+                    ],
                 ]
 
             ],
