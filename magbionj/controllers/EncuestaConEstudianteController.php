@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\Estudiante;
 use app\models\PreguntaNumerica;
 use app\models\RespuestaNumerica;
 use app\models\RespuestaTexto;
@@ -88,13 +89,10 @@ class EncuestaConEstudianteController extends Controller
 
     }
 
-    public function actionCreate2()
+    public function actionCreate2($idencuesta)
     {
         $model = new EncuestaConEstudiante();
-
-
-        if ($model->load(Yii::$app->request->post())) {
-
+        if ($idencuesta != null) {
             $model->fecha_completado = date('Y-m-d');
             $model->anio = date('Y');
             if (date('m') > 6) {
@@ -102,20 +100,16 @@ class EncuestaConEstudianteController extends Controller
             } else {
                 $model->semestre = 1;
             }
-            $model->id_estudiante = 1;
+            echo Yii::$app->user->id;
+            $stuen = Estudiante::find()->where(['=','id_user',Yii::$app->user->id])->one();
+            $model->id_estudiante = $stuen->id_estudiante ;
             $model->estado = 2;
-
-
+            $model->id_encuesta=$idencuesta;
             if ($model->save()) {
                 return $this->redirect(['completarencuesta', 'id' => $model->id_encuesta, 'idece' => $model->id_ece, 'idpaso' => 1]);
             }
-        } else {
-            return $this->render('create2', [
-                'model' => $model,
-            ]);
         }
     }
-
 
     public function actionCompletarencuesta($id, $idece, $idpaso)
     {
@@ -164,7 +158,7 @@ class EncuestaConEstudianteController extends Controller
                         $model4->estado = 1;
                         $model4->save();
 
-                        return $this->redirect(['index']);
+                        return $this->redirect(['encuestafinalizada']);
 
 
                     } else {
@@ -218,7 +212,11 @@ class EncuestaConEstudianteController extends Controller
                     ]);
                 }
             }
+        }else{
+            return $this->redirect(['encuestafinalizada']);
+
         }
+
     }
 
     public function actionEncuestatemauno($id, $idece)
