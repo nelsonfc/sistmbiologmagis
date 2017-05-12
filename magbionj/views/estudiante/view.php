@@ -189,7 +189,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     <td class="center elementoaocultar "> <?php if ($asignatura->calificacion == 0) {
                             echo '-';
                         } else {
-                            echo $asignatura->calificacion;
+                            echo substr_replace ($asignatura->calificacion, '.', -1, 0);
                         } ?></td>
                     <td class="center elementoaocultar "> <?php
                         if ($asignatura->calificacion == 0) {
@@ -238,7 +238,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                                     <td class="center elementoaocultar "> <?php if ($asignatura->calificacion == 0) {
                                                             echo '-';
                                                         } else {
-                                                            echo $asignatura->calificacion;
+                                                            echo substr_replace ($asignatura->calificacion, '.', -1, 0);
                                                         } ?></td>
                                                     <td class="center elementoaocultar "> <?php
                                                         if ($asignatura->calificacion == 0) {

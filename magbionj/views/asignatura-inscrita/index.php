@@ -61,7 +61,12 @@ Modal::end();
                 'pluginOptions' => ['allowClear' => true],
             ],
         ],
-        ['attribute' => 'calificacion','value' => function($model){ return $model->calificacion/10;},
+        ['attribute' => 'calificacion',
+            'value' => function($model){ if($model->calificacion == 0){
+                return '-';
+            }
+            return substr_replace ($model->calificacion, '.', -1, 0);;
+        },
         ], ['class' => 'kartik\grid\ActionColumn',
             'template' => '{update}',
             'buttons' => [

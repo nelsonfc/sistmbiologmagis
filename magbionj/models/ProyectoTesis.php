@@ -24,6 +24,8 @@ use Yii;
  */
 class ProyectoTesis extends \yii\db\ActiveRecord
 {
+    public $cotutor, $tutor;
+
     /**
      * @inheritdoc
      */

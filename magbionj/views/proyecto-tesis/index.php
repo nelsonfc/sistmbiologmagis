@@ -2,11 +2,21 @@
 
 use yii\helpers\Html;
 use kartik\grid\GridView;
-
+use yii\bootstrap\Modal;
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\ProyectoTesisSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
+Modal::begin([
+    'id' => 'modalver',
+    'class' => 'modal',
+    'options' => ['    overflow-x: hidden;
+    overflow-y: auto;'],
+    'closeButton' => false,
+    'size' => 'modal-lg',
+]);
+echo "<div class='modalContent'></div>";
 
+Modal::end();
 $this->title = '';
 ?>
 <div class="proyecto-tesis-index">
@@ -42,7 +52,8 @@ $this->title = '';
             ],
             'format' => 'html'
         ],
-        'nota_final',
+        ['attribute' => 'nota_final',
+        'value' => function($model) { if($model->nota_final != 0){return substr_replace ($model->nota_final, '.', -1, 0);}else{return "-";}}],
             // 'estudiante_id_estudiante',
         ['attribute' => 'estado_tesis_id_estado',
             'format'=> 'html',
@@ -133,3 +144,19 @@ $this->title = '';
     \yii\widgets\Pjax::end();
     ?>
 </div>
+<?php
+$this->registerJs('$(document).on("ready pjax:success", function() {
+    $(".modal").removeAttr("tabindex");
+    $(".modalButton2").click(function(){
+        $("#kvFileinputModal").empty();
+        $("#kvFileinputModal").removeClass("modal-backdrop fade in");
+       var tagname = $(this)[0].tagName;      
+       $("#modalver").modal("show")
+                  .find(".modalContent")
+                  .load($(this).attr("href"));
+       return false;   
+   });
+});')
+
+;
+?>

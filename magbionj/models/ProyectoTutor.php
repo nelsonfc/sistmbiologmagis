@@ -34,7 +34,6 @@ class ProyectoTutor extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['proyecto_tesis_id_proyecto', 'tipo_tutor_proyecto_id_tipo', 'profesor_id_profesor', 'fecha', 'profesor'], 'required'],
             [['proyecto_tesis_id_proyecto', 'tipo_tutor_proyecto_id_tipo', 'profesor_id_profesor', 'profesor'], 'integer'],
             [['fecha'], 'safe'],
             [['profesor_id_profesor'], 'exist', 'skipOnError' => true, 'targetClass' => Profesor::className(), 'targetAttribute' => ['profesor_id_profesor' => 'id_profesor']],
