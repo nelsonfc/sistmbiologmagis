@@ -47,10 +47,10 @@ class RevisorProfesorTesis extends \yii\db\ActiveRecord
     {
         return [
             'id_revision' => 'Id Revision',
-            'nota_oral' => 'Nota Oral',
-            'nota_escrita' => 'Nota Escrita',
-            'nota_final' => 'Nota Final',
-            'profesor_id_profesor' => 'Profesor Id Profesor',
+            'nota_oral' => 'Nota Oral (50%)',
+            'nota_escrita' => 'Nota Escrita (50%)',
+            'nota_final' => 'Promedio',
+            'profesor_id_profesor' => 'Revisor',
             'tesis_id_tesis' => 'Tesis Id Tesis',
         ];
     }

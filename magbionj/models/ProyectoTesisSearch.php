@@ -39,9 +39,9 @@ class ProyectoTesisSearch extends ProyectoTesis
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
+    public function search($params, $id)
     {
-        $query = ProyectoTesis::find();
+        $query = ProyectoTesis::find()->where(['estudiante_id_estudiante' =>$id]);
 
         // add conditions that should always apply here
 
@@ -60,15 +60,19 @@ class ProyectoTesisSearch extends ProyectoTesis
         // grid filtering conditions
         $query->andFilterWhere([
             'id_proyecto' => $this->id_proyecto,
-            'fecha_rendicion' => $this->fecha_rendicion,
             'nota_final' => $this->nota_final,
             'estudiante_id_estudiante' => $this->estudiante_id_estudiante,
             'estado_tesis_id_estado' => $this->estado_tesis_id_estado,
         ]);
-
+        if(!empty($this->fecha_rendicion)){
+            $this->fecha_rendicion = date("Y-m-d", strtotime($this->fecha_rendicion));
+        }
         $query->andFilterWhere(['like', 'nombre_tesis', $this->nombre_tesis])
-            ->andFilterWhere(['like', 'financiamiento', $this->financiamiento]);
-
+            ->andFilterWhere(['like', 'financiamiento', $this->financiamiento])
+        ->andFilterWhere(['like', 'fecha_rendicion',$this->fecha_rendicion,]);
+        if(!empty($this->fecha_rendicion)){
+            $this->fecha_rendicion = date("d-m-Y", strtotime($this->fecha_rendicion));
+        }
         return $dataProvider;
     }
 }

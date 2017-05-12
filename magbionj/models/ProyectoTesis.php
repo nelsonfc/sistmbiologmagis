@@ -57,10 +57,10 @@ class ProyectoTesis extends \yii\db\ActiveRecord
             'id_proyecto' => 'Id Proyecto',
             'nombre_tesis' => 'Nombre Tesis',
             'financiamiento' => 'Financiamiento',
-            'fecha_rendicion' => 'Fecha Rendicion',
-            'nota_final' => 'Nota Final',
-            'estudiante_id_estudiante' => 'Estudiante Id Estudiante',
-            'estado_tesis_id_estado' => 'Estado Tesis Id Estado',
+            'fecha_rendicion' => 'Fecha Rendición Aproximada (4 meses después)',
+            'nota_final' => 'Promedio Final',
+            'estudiante_id_estudiante' => 'Estudiante',
+            'estado_tesis_id_estado' => 'Estado',
         ];
     }
 
@@ -88,6 +88,7 @@ class ProyectoTesis extends \yii\db\ActiveRecord
         return $this->hasOne(Estudiante::className(), ['id_estudiante' => 'estudiante_id_estudiante']);
     }
 
+
     /**
      * @return \yii\db\ActiveQuery
      */
@@ -95,6 +96,27 @@ class ProyectoTesis extends \yii\db\ActiveRecord
     {
         return $this->hasMany(ProyectoTutor::className(), ['proyecto_tesis_id_proyecto' => 'id_proyecto']);
     }
+    public static function getListaProfe() {
+        $opciones = Profesor::find()->all();
+        $i = 0;
+        $profes[0] = '';
+        foreach ($opciones as $opcion){
+            $profes[$i] = ['id_profesor' => $opcion->id_profesor, 'nombre' => $opcion->nombres." ".$opcion->apellidos];
+            $i++;
+        }
+        return \yii\helpers\ArrayHelper::map($profes, 'id_profesor', 'nombre');
+    }
+
+    public static function getListaEstado() {
+        $opciones = EstadoTesis::find()->asArray()->all();
+        return \yii\helpers\ArrayHelper::map($opciones, 'id_estado', 'nombre');
+    }
+
+    public static function getListaRevisor() {
+        $opciones = RevisorExterno::find()->asArray()->all();
+        return \yii\helpers\ArrayHelper::map($opciones, 'id_revisor', 'nombre');
+    }
+
 
     /**
      * @return \yii\db\ActiveQuery

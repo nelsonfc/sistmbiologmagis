@@ -47,11 +47,11 @@ class RevisorExternoProyecto extends \yii\db\ActiveRecord
     {
         return [
             'id_revision' => 'Id Revision',
-            'nota_oral' => 'Nota Oral',
-            'nota_escrita' => 'Nota Escrita',
-            'nota_final' => 'Nota Final',
+            'nota_oral' => 'Nota Oral (50%)',
+            'nota_escrita' => 'Nota Escrita (50%)',
+            'nota_final' => 'Promedio',
             'proyecto_tesis_id_proyecto' => 'Proyecto Tesis Id Proyecto',
-            'revisor_externo_id_revisor' => 'Revisor Externo Id Revisor',
+            'revisor_externo_id_revisor' => 'Revisor Externo',
         ];
     }
 

@@ -118,21 +118,26 @@ Modal::end();
         ],
 
         ['class' => 'kartik\grid\ActionColumn',
-            'template' => '{view} {update} {inscribir} {misasignaturas}',
+            'template' => '{view} {update} {inscribir} {misasignaturas} {inscribirproyecto}',
             'buttons' => [
                 'view' => function ($url, $model) {
-                    return Html::a(Yii::t('app', '<span class="glyphicon glyphicon-eye-open"></span>&nbsp'), $url, ['class' => 'modalButton2']);
+                    return Html::a(Yii::t('app', '<span class="glyphicon glyphicon-eye-open"></span>&nbsp'), $url, ['class' => 'modalButton2', 'title' => 'Ver Ficha Estudiante']);
                 },
                 'update' => function ($url, $model) {
-                    return Html::a(Yii::t('app', '<span class="glyphicon glyphicon-pencil"></span>'), $url, ['class' => 'modalButton']);
+                    return Html::a(Yii::t('app', '<span class="glyphicon glyphicon-pencil"></span>'), $url, ['class' => 'modalButton', 'title' => 'Modificar Ficha Estudiante']);
 
                 },
                 'inscribir' => function ($url, $model) {
-        return Html::a(Yii::t('app', '<span class="glyphicon glyphicon-book"></span>'), ['asignatura-inscrita/create', 'id' => $model->id_estudiante],['class' => 'modalButton6']);
+        return Html::a(Yii::t('app', '<span class="glyphicon glyphicon-book"></span>'), ['asignatura-inscrita/create', 'id' => $model->id_estudiante],['class' => 'modalButton6', 'title' => 'Inscribir Asignaturas']);
 
     },
     'misasignaturas' => function ($url, $model) {
-        return Html::a(Yii::t('app', '<span class="fa fa-edit"></span>'), ['asignatura-inscrita/index', 'id' => $model->id_estudiante],['class' => 'modalButton10','id' => 'descarga' ,'data-pjax' => '0', 'target' => '_blank']);
+        return Html::a(Yii::t('app', '<span class="fa fa-edit"></span>'), ['asignatura-inscrita/index', 'id' => $model->id_estudiante],['class' => 'modalButton10','id' => 'descarga' ,'data-pjax' => '0', 'target' => '_blank', 'title' => 'Mis Asignaturas']);
+
+    },
+
+    'inscribirproyecto' => function ($url, $model) {
+        return Html::a(Yii::t('app', '<span class="fa fa-calendar-plus-o"></span>'), ['proyecto-tesis/index', 'id' => $model->id_estudiante],['class' => 'modalButton10','id' => 'descarga' ,'data-pjax' => '0', 'target' => '_blank', 'title' => 'Proyecto de Tesis']);
 
     }
             ]
