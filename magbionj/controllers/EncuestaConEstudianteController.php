@@ -101,10 +101,10 @@ class EncuestaConEstudianteController extends Controller
                 $model->semestre = 1;
             }
             echo Yii::$app->user->id;
-            $stuen = Estudiante::find()->where(['=','id_user',Yii::$app->user->id])->one();
-            $model->id_estudiante = $stuen->id_estudiante ;
+            $stuen = Estudiante::find()->where(['=', 'id_user', Yii::$app->user->id])->one();
+            $model->id_estudiante = $stuen->id_estudiante;
             $model->estado = 2;
-            $model->id_encuesta=$idencuesta;
+            $model->id_encuesta = $idencuesta;
             if ($model->save()) {
                 return $this->redirect(['completarencuesta', 'id' => $model->id_encuesta, 'idece' => $model->id_ece, 'idpaso' => 1]);
             }
@@ -113,113 +113,363 @@ class EncuestaConEstudianteController extends Controller
 
     public function actionCompletarencuesta($id, $idece, $idpaso)
     {
-        if ($this->findModel($idece)->estado != 1) {
-            $model2 = new RespuestaNumerica();
-            $model = [new RespuestaNumerica];
-            $model3 = new RespuestaTexto();
-            if (null != RespuestaNumerica::find()->where(['=', 'id_ece', $idece])->andWhere(['=', 'id_preguntanumerica', 37])->all() && $idpaso == 1) {
-                $idpaso += 1;
-                return $this->redirect(['completarencuesta', 'id' => $id, 'idece' => $idece, 'idpaso' => $idpaso]);
-
-            }
-            if (null != RespuestaNumerica::find()->where(['=', 'id_ece', $idece])->andWhere(['=', 'id_preguntanumerica', 44])->all() && $idpaso == 2) {
-                $idpaso += 1;
-                return $this->redirect(['completarencuesta', 'id' => $id, 'idece' => $idece, 'idpaso' => $idpaso]);
-
-            }
-            if (null != RespuestaNumerica::find()->where(['=', 'id_ece', $idece])->andWhere(['=', 'id_preguntanumerica', 50])->all() && $idpaso == 3) {
-                $idpaso += 1;
-                return $this->redirect(['completarencuesta', 'id' => $id, 'idece' => $idece, 'idpaso' => $idpaso]);
-
-            }
-            if(null != RespuestaNumerica::find()->where(['=','id_ece',$idece])->andWhere(['=','id_preguntanumerica',54])->all()&&$idpaso==4){
-                $idpaso+=1;
-                return $this->redirect(['completarencuesta', 'id' => $id, 'idece' => $idece, 'idpaso' => $idpaso]);
-
-            }
-            if(null != RespuestaNumerica::find()->where(['=','id_ece',$idece])->andWhere(['=','id_preguntanumerica',57])->all()&&$idpaso==5){
-                $idpaso+=1;
-                return $this->redirect(['completarencuesta', 'id' => $id, 'idece' => $idece, 'idpaso' => $idpaso]);
-
-            }
-            if(null != RespuestaNumerica::find()->where(['=','id_ece',$idece])->andWhere(['=','id_preguntanumerica',58])->all()&&$idpaso==6){
-                $idpaso+=1;
-                return $this->redirect(['completarencuesta', 'id' => $id, 'idece' => $idece, 'idpaso' => $idpaso]);
-
-            }
-            if ($idpaso == 7) {
-
-                if ($model3->load(Yii::$app->request->post())) {
-                    $model3->id_encuesta_con_estudiante = $idece;
-                    $model3->id_pregunta_texto = 14;
-                    if ($model3->save()) {
-                        $model4 = $this->findModel($idece);
-
-                        $model4->estado = 1;
-                        $model4->save();
-
-                        return $this->redirect(['encuestafinalizada']);
+        $estudiante = Estudiante::find()->where(['=', 'id_user', Yii::$app->user->id])->one();
 
 
+        if ($this->findModel($idece)->estado != 1 && $this->findModel($idece)->id_estudiante == $estudiante->id_estudiante && $id >=1 && $id <4) {
+
+                    if ($id == 1) {
+                $model2 = new RespuestaNumerica();
+                $model = [new RespuestaNumerica];
+                $model3 = new RespuestaTexto();
+                if (null == RespuestaNumerica::find()->where(['=', 'id_ece', $idece])->andWhere(['=', 'id_preguntanumerica', 37])->all() && $idpaso == 2) {
+                    $idpaso = 1;
+                    return $this->redirect(['completarencuesta', 'id' => $id, 'idece' => $idece, 'idpaso' => $idpaso]);
+                }
+                if (null == RespuestaNumerica::find()->where(['=', 'id_ece', $idece])->andWhere(['=', 'id_preguntanumerica', 44])->all() && $idpaso == 3) {
+                    $idpaso = 2;
+                    return $this->redirect(['completarencuesta', 'id' => $id, 'idece' => $idece, 'idpaso' => $idpaso]);
+                }
+                if (null == RespuestaNumerica::find()->where(['=', 'id_ece', $idece])->andWhere(['=', 'id_preguntanumerica', 50])->all() && $idpaso == 4) {
+                    $idpaso = 3;
+                    return $this->redirect(['completarencuesta', 'id' => $id, 'idece' => $idece, 'idpaso' => $idpaso]);
+                }
+                if (null == RespuestaNumerica::find()->where(['=', 'id_ece', $idece])->andWhere(['=', 'id_preguntanumerica', 54])->all() && $idpaso == 5) {
+                    $idpaso = 4;
+                    return $this->redirect(['completarencuesta', 'id' => $id, 'idece' => $idece, 'idpaso' => $idpaso]);
+                }
+                if (null == RespuestaNumerica::find()->where(['=', 'id_ece', $idece])->andWhere(['=', 'id_preguntanumerica', 57])->all() && $idpaso == 6) {
+                    $idpaso = 5;
+                    return $this->redirect(['completarencuesta', 'id' => $id, 'idece' => $idece, 'idpaso' => $idpaso]);
+                }
+                if (null == RespuestaNumerica::find()->where(['=', 'id_ece', $idece])->andWhere(['=', 'id_preguntanumerica', 58])->all() && $idpaso == 7) {
+                    $idpaso = 6;
+                    return $this->redirect(['completarencuesta', 'id' => $id, 'idece' => $idece, 'idpaso' => $idpaso]);
+                }
+                if (null != RespuestaNumerica::find()->where(['=', 'id_ece', $idece])->andWhere(['=', 'id_preguntanumerica', 37])->all() && $idpaso == 1) {
+                    $idpaso += 1;
+                    return $this->redirect(['completarencuesta', 'id' => $id, 'idece' => $idece, 'idpaso' => $idpaso]);
+                }
+                if (null != RespuestaNumerica::find()->where(['=', 'id_ece', $idece])->andWhere(['=', 'id_preguntanumerica', 44])->all() && $idpaso == 2) {
+                    $idpaso += 1;
+                    return $this->redirect(['completarencuesta', 'id' => $id, 'idece' => $idece, 'idpaso' => $idpaso]);
+                }
+                if (null != RespuestaNumerica::find()->where(['=', 'id_ece', $idece])->andWhere(['=', 'id_preguntanumerica', 50])->all() && $idpaso == 3) {
+                    $idpaso += 1;
+                    return $this->redirect(['completarencuesta', 'id' => $id, 'idece' => $idece, 'idpaso' => $idpaso]);
+                }
+                if (null != RespuestaNumerica::find()->where(['=', 'id_ece', $idece])->andWhere(['=', 'id_preguntanumerica', 54])->all() && $idpaso == 4) {
+                    $idpaso += 1;
+                    return $this->redirect(['completarencuesta', 'id' => $id, 'idece' => $idece, 'idpaso' => $idpaso]);
+                }
+                if (null != RespuestaNumerica::find()->where(['=', 'id_ece', $idece])->andWhere(['=', 'id_preguntanumerica', 57])->all() && $idpaso == 5) {
+                    $idpaso += 1;
+                    return $this->redirect(['completarencuesta', 'id' => $id, 'idece' => $idece, 'idpaso' => $idpaso]);
+                }
+                if (null != RespuestaNumerica::find()->where(['=', 'id_ece', $idece])->andWhere(['=', 'id_preguntanumerica', 58])->all() && $idpaso == 6) {
+                    $idpaso += 1;
+                    return $this->redirect(['completarencuesta', 'id' => $id, 'idece' => $idece, 'idpaso' => $idpaso]);
+                }
+                if ($idpaso == 7) {
+                    if ($model3->load(Yii::$app->request->post())) {
+                        $model3->id_encuesta_con_estudiante = $idece;
+                        $model3->id_pregunta_texto = 14;
+                        if ($model3->save()) {
+                            $model4 = $this->findModel($idece);
+                            $model4->estado = 1;
+                            $model4->save();
+                            return $this->redirect(['encuestafinalizada']);
+                        } else {
+                            return $this->render('completarencuesta', [
+                                'model' => $model,
+                                'content' => $this->renderPartial('encuestatemauno', ['model' => $model, 'model3' => $model3, 'model2' => $model2, 'id' => $id, 'idece' => $idece, 'idpaso' => $idpaso]),
+                            ]);
+                        }
+                    }
+                    return $this->render('completarencuesta', [
+                        'model' => $model,
+                        'content' => $this->renderPartial('encuestatemauno', ['model' => $model, 'model3' => $model3, 'model2' => $model2, 'id' => $id, 'idece' => $idece, 'idpaso' => $idpaso]),
+                    ]);
+                } else {
+                    if (Model::loadMultiple($model, Yii::$app->request->post())) {
+                        $model = Model::createMultiple(RespuestaNumerica::classname());
+                        Model::loadMultiple($model, Yii::$app->request->post());
+                        $valid = true;
+                        if ($valid) {
+                            $transaction = \Yii::$app->db->beginTransaction();
+                            try {
+                                foreach ($model as $modelAddress) {
+                                    $modelo = new RespuestaNumerica();
+                                    $modelo->valor_respuesta = $modelAddress->valor_respuesta;
+                                    $modelo->id_ece = $idece;
+                                    $modelo->id_preguntanumerica = $modelAddress->id_preguntanumerica;
+                                    if (!($flag = $modelo->save(false))) {
+                                        $transaction->rollBack();
+                                        break;
+                                    }
+                                }
+                                if ($flag) {
+                                    $transaction->commit();
+                                    $idpaso += 1;
+                                    return $this->redirect(['completarencuesta', 'id' => $id, 'idece' => $idece, 'idpaso' => $idpaso]);
+                                }
+                            } catch (Exception $e) {
+                                $transaction->rollBack();
+                            }
+                        }
                     } else {
                         return $this->render('completarencuesta', [
                             'model' => $model,
                             'content' => $this->renderPartial('encuestatemauno', ['model' => $model, 'model3' => $model3, 'model2' => $model2, 'id' => $id, 'idece' => $idece, 'idpaso' => $idpaso]),
-
                         ]);
                     }
                 }
-                return $this->render('completarencuesta', [
-                    'model' => $model,
-                    'content' => $this->renderPartial('encuestatemauno', ['model' => $model, 'model3' => $model3, 'model2' => $model2, 'id' => $id, 'idece' => $idece, 'idpaso' => $idpaso]),
-
-                ]);
-
-            } else {
-                if (Model::loadMultiple($model, Yii::$app->request->post())) {
-                    $model = Model::createMultiple(RespuestaNumerica::classname());
-                    Model::loadMultiple($model, Yii::$app->request->post());
-                    $valid = true;
-                    if ($valid) {
-                        $transaction = \Yii::$app->db->beginTransaction();
-                        try {
-                            foreach ($model as $modelAddress) {
-                                $modelo = new RespuestaNumerica();
-                                $modelo->valor_respuesta = $modelAddress->valor_respuesta;
-                                $modelo->id_ece = $idece;
-                                $modelo->id_preguntanumerica = $modelAddress->id_preguntanumerica;
-                                if (!($flag = $modelo->save(false))) {
-                                    $transaction->rollBack();
-                                    break;
-                                }
-                            }
-
-                            if ($flag) {
-                                $transaction->commit();
-                                $idpaso += 1;
-                                return $this->redirect(['completarencuesta', 'id' => $id, 'idece' => $idece, 'idpaso' => $idpaso]);
-                            }
-                        } catch (Exception $e) {
-                            $transaction->rollBack();
+            }
+            if ($id == 2) {
+                $model2 = new RespuestaNumerica();
+                $model = [new RespuestaNumerica];
+                $model3 = new RespuestaTexto();
+                if (null == RespuestaNumerica::find()->where(['=', 'id_ece', $idece])->andWhere(['=', 'id_preguntanumerica', 6])->all() && $idpaso == 2) {
+                    $idpaso = 1;
+                    return $this->redirect(['completarencuesta', 'id' => $id, 'idece' => $idece, 'idpaso' => $idpaso]);
+                }
+                if (null == RespuestaNumerica::find()->where(['=', 'id_ece', $idece])->andWhere(['=', 'id_preguntanumerica', 12])->all() && $idpaso == 3) {
+                    $idpaso = 2;
+                    return $this->redirect(['completarencuesta', 'id' => $id, 'idece' => $idece, 'idpaso' => $idpaso]);
+                }
+                if (null == RespuestaNumerica::find()->where(['=', 'id_ece', $idece])->andWhere(['=', 'id_preguntanumerica', 17])->all() && $idpaso == 4) {
+                    $idpaso = 3;
+                    return $this->redirect(['completarencuesta', 'id' => $id, 'idece' => $idece, 'idpaso' => $idpaso]);
+                }
+                if (null == RespuestaNumerica::find()->where(['=', 'id_ece', $idece])->andWhere(['=', 'id_preguntanumerica', 22])->all() && $idpaso == 5) {
+                    $idpaso = 4;
+                    return $this->redirect(['completarencuesta', 'id' => $id, 'idece' => $idece, 'idpaso' => $idpaso]);
+                }
+                if (null == RespuestaNumerica::find()->where(['=', 'id_ece', $idece])->andWhere(['=', 'id_preguntanumerica', 27])->all() && $idpaso == 6) {
+                    $idpaso = 5;
+                    return $this->redirect(['completarencuesta', 'id' => $id, 'idece' => $idece, 'idpaso' => $idpaso]);
+                }
+                if (null == RespuestaTexto::find()->where(['=', 'id_encuesta_con_estudiante', $idece])->andWhere(['=', 'id_pregunta_texto', 1])->all() && $idpaso == 7) {
+                    $idpaso = 6;
+                    return $this->redirect(['completarencuesta', 'id' => $id, 'idece' => $idece, 'idpaso' => $idpaso]);
+                }
+                if (null != RespuestaNumerica::find()->where(['=', 'id_ece', $idece])->andWhere(['=', 'id_preguntanumerica', 6])->all() && $idpaso == 1) {
+                    $idpaso += 1;
+                    return $this->redirect(['completarencuesta', 'id' => $id, 'idece' => $idece, 'idpaso' => $idpaso]);
+                }
+                if (null != RespuestaNumerica::find()->where(['=', 'id_ece', $idece])->andWhere(['=', 'id_preguntanumerica', 12])->all() && $idpaso == 2) {
+                    $idpaso += 1;
+                    return $this->redirect(['completarencuesta', 'id' => $id, 'idece' => $idece, 'idpaso' => $idpaso]);
+                }
+                if (null != RespuestaNumerica::find()->where(['=', 'id_ece', $idece])->andWhere(['=', 'id_preguntanumerica', 17])->all() && $idpaso == 3) {
+                    $idpaso += 1;
+                    return $this->redirect(['completarencuesta', 'id' => $id, 'idece' => $idece, 'idpaso' => $idpaso]);
+                }
+                if (null != RespuestaNumerica::find()->where(['=', 'id_ece', $idece])->andWhere(['=', 'id_preguntanumerica', 22])->all() && $idpaso == 4) {
+                    $idpaso += 1;
+                    return $this->redirect(['completarencuesta', 'id' => $id, 'idece' => $idece, 'idpaso' => $idpaso]);
+                }
+                if (null != RespuestaNumerica::find()->where(['=', 'id_ece', $idece])->andWhere(['=', 'id_preguntanumerica', 27])->all() && $idpaso == 5) {
+                    $idpaso += 1;
+                    return $this->redirect(['completarencuesta', 'id' => $id, 'idece' => $idece, 'idpaso' => $idpaso]);
+                }
+                if (null != RespuestaTexto::find()->where(['=', 'id_encuesta_con_estudiante', $idece])->andWhere(['=', 'id_pregunta_texto', 1])->all() && $idpaso == 6) {
+                    $idpaso += 1;
+                    return $this->redirect(['completarencuesta', 'id' => $id, 'idece' => $idece, 'idpaso' => $idpaso]);
+                }
+                if ($idpaso == 6) {
+                    if ($model3->load(Yii::$app->request->post())) {
+                        $model3->id_encuesta_con_estudiante = $idece;
+                        $model3->id_pregunta_texto = 1;
+                        if ($model3->save()) {
+                            $idpaso += 1;
+                            return $this->redirect(['completarencuesta', 'id' => $id, 'idece' => $idece, 'idpaso' => $idpaso]);
+                        } else {
+                            return $this->render('completarencuesta', [
+                                'model' => $model,
+                                'content' => $this->renderPartial('encuestatemauno', ['model' => $model, 'model3' => $model3, 'model2' => $model2, 'id' => $id, 'idece' => $idece, 'idpaso' => $idpaso]),
+                            ]);
                         }
-
                     }
-                } else {
                     return $this->render('completarencuesta', [
                         'model' => $model,
                         'content' => $this->renderPartial('encuestatemauno', ['model' => $model, 'model3' => $model3, 'model2' => $model2, 'id' => $id, 'idece' => $idece, 'idpaso' => $idpaso]),
-
                     ]);
                 }
+
+                if($idpaso==7){
+                    if ($model3->load(Yii::$app->request->post())) {
+                        $model3->id_encuesta_con_estudiante = $idece;
+                        $model3->id_pregunta_texto = 15;
+                        if ($model3->save()) {
+                            $model4 = $this->findModel($idece);
+                            $model4->estado = 1;
+                            $model4->save();
+                            return $this->redirect(['encuestafinalizada']);
+                        } else {
+                            return $this->render('completarencuesta', [
+                                'model' => $model,
+                                'content' => $this->renderPartial('encuestatemauno', ['model' => $model, 'model3' => $model3, 'model2' => $model2, 'id' => $id, 'idece' => $idece, 'idpaso' => $idpaso]),
+                            ]);
+                        }
+                    }
+                    return $this->render('completarencuesta', [
+                        'model' => $model,
+                        'content' => $this->renderPartial('encuestatemauno', ['model' => $model, 'model3' => $model3, 'model2' => $model2, 'id' => $id, 'idece' => $idece, 'idpaso' => $idpaso]),
+                    ]);
+
+                }else {
+                    if (Model::loadMultiple($model, Yii::$app->request->post())) {
+                        $model = Model::createMultiple(RespuestaNumerica::classname());
+                        Model::loadMultiple($model, Yii::$app->request->post());
+                        $valid = true;
+                        if ($valid) {
+                            $transaction = \Yii::$app->db->beginTransaction();
+                            try {
+                                foreach ($model as $modelAddress) {
+                                    $modelo = new RespuestaNumerica();
+                                    $modelo->valor_respuesta = $modelAddress->valor_respuesta;
+                                    $modelo->id_ece = $idece;
+                                    $modelo->id_preguntanumerica = $modelAddress->id_preguntanumerica;
+                                    if (!($flag = $modelo->save(false))) {
+                                        $transaction->rollBack();
+                                        break;
+                                    }
+                                }
+                                if ($flag) {
+                                    $transaction->commit();
+                                    $idpaso += 1;
+                                    return $this->redirect(['completarencuesta', 'id' => $id, 'idece' => $idece, 'idpaso' => $idpaso]);
+                                }
+                            } catch (Exception $e) {
+                                $transaction->rollBack();
+                            }
+                        }
+                    } else {
+                        return $this->render('completarencuesta', [
+                            'model' => $model,
+                            'content' => $this->renderPartial('encuestatemauno', ['model' => $model, 'model3' => $model3, 'model2' => $model2, 'id' => $id, 'idece' => $idece, 'idpaso' => $idpaso]),
+                        ]);
+                    }
+                }
             }
-        }else{
+            if ($id == 3) {
+                $model2 = new RespuestaNumerica();
+                $model = [new RespuestaNumerica];
+                $model3 = new RespuestaTexto();
+                if (null == RespuestaNumerica::find()->where(['=', 'id_ece', $idece])->andWhere(['=', 'id_preguntanumerica', 37])->all() && $idpaso == 2) {
+                    $idpaso = 1;
+                    return $this->redirect(['completarencuesta', 'id' => $id, 'idece' => $idece, 'idpaso' => $idpaso]);
+                }
+                if (null == RespuestaNumerica::find()->where(['=', 'id_ece', $idece])->andWhere(['=', 'id_preguntanumerica', 44])->all() && $idpaso == 3) {
+                    $idpaso = 2;
+                    return $this->redirect(['completarencuesta', 'id' => $id, 'idece' => $idece, 'idpaso' => $idpaso]);
+                }
+                if (null == RespuestaNumerica::find()->where(['=', 'id_ece', $idece])->andWhere(['=', 'id_preguntanumerica', 50])->all() && $idpaso == 4) {
+                    $idpaso = 3;
+                    return $this->redirect(['completarencuesta', 'id' => $id, 'idece' => $idece, 'idpaso' => $idpaso]);
+                }
+                if (null == RespuestaNumerica::find()->where(['=', 'id_ece', $idece])->andWhere(['=', 'id_preguntanumerica', 54])->all() && $idpaso == 5) {
+                    $idpaso = 4;
+                    return $this->redirect(['completarencuesta', 'id' => $id, 'idece' => $idece, 'idpaso' => $idpaso]);
+                }
+                if (null == RespuestaNumerica::find()->where(['=', 'id_ece', $idece])->andWhere(['=', 'id_preguntanumerica', 57])->all() && $idpaso == 6) {
+                    $idpaso = 5;
+                    return $this->redirect(['completarencuesta', 'id' => $id, 'idece' => $idece, 'idpaso' => $idpaso]);
+                }
+                if (null == RespuestaNumerica::find()->where(['=', 'id_ece', $idece])->andWhere(['=', 'id_preguntanumerica', 58])->all() && $idpaso == 7) {
+                    $idpaso = 6;
+                    return $this->redirect(['completarencuesta', 'id' => $id, 'idece' => $idece, 'idpaso' => $idpaso]);
+                }
+                if (null != RespuestaNumerica::find()->where(['=', 'id_ece', $idece])->andWhere(['=', 'id_preguntanumerica', 37])->all() && $idpaso == 1) {
+                    $idpaso += 1;
+                    return $this->redirect(['completarencuesta', 'id' => $id, 'idece' => $idece, 'idpaso' => $idpaso]);
+                }
+                if (null != RespuestaNumerica::find()->where(['=', 'id_ece', $idece])->andWhere(['=', 'id_preguntanumerica', 44])->all() && $idpaso == 2) {
+                    $idpaso += 1;
+                    return $this->redirect(['completarencuesta', 'id' => $id, 'idece' => $idece, 'idpaso' => $idpaso]);
+                }
+                if (null != RespuestaNumerica::find()->where(['=', 'id_ece', $idece])->andWhere(['=', 'id_preguntanumerica', 50])->all() && $idpaso == 3) {
+                    $idpaso += 1;
+                    return $this->redirect(['completarencuesta', 'id' => $id, 'idece' => $idece, 'idpaso' => $idpaso]);
+                }
+                if (null != RespuestaNumerica::find()->where(['=', 'id_ece', $idece])->andWhere(['=', 'id_preguntanumerica', 54])->all() && $idpaso == 4) {
+                    $idpaso += 1;
+                    return $this->redirect(['completarencuesta', 'id' => $id, 'idece' => $idece, 'idpaso' => $idpaso]);
+                }
+                if (null != RespuestaNumerica::find()->where(['=', 'id_ece', $idece])->andWhere(['=', 'id_preguntanumerica', 57])->all() && $idpaso == 5) {
+                    $idpaso += 1;
+                    return $this->redirect(['completarencuesta', 'id' => $id, 'idece' => $idece, 'idpaso' => $idpaso]);
+                }
+                if (null != RespuestaNumerica::find()->where(['=', 'id_ece', $idece])->andWhere(['=', 'id_preguntanumerica', 58])->all() && $idpaso == 6) {
+                    $idpaso += 1;
+                    return $this->redirect(['completarencuesta', 'id' => $id, 'idece' => $idece, 'idpaso' => $idpaso]);
+                }
+                if ($idpaso == 7) {
+                    if ($model3->load(Yii::$app->request->post())) {
+                        $model3->id_encuesta_con_estudiante = $idece;
+                        $model3->id_pregunta_texto = 14;
+                        if ($model3->save()) {
+                            $model4 = $this->findModel($idece);
+                            $model4->estado = 1;
+                            $model4->save();
+                            return $this->redirect(['encuestafinalizada']);
+                        } else {
+                            return $this->render('completarencuesta', [
+                                'model' => $model,
+                                'content' => $this->renderPartial('encuestatemauno', ['model' => $model, 'model3' => $model3, 'model2' => $model2, 'id' => $id, 'idece' => $idece, 'idpaso' => $idpaso]),
+                            ]);
+                        }
+                    }
+                    return $this->render('completarencuesta', [
+                        'model' => $model,
+                        'content' => $this->renderPartial('encuestatemauno', ['model' => $model, 'model3' => $model3, 'model2' => $model2, 'id' => $id, 'idece' => $idece, 'idpaso' => $idpaso]),
+                    ]);
+                } else {
+                    if (Model::loadMultiple($model, Yii::$app->request->post())) {
+                        $model = Model::createMultiple(RespuestaNumerica::classname());
+                        Model::loadMultiple($model, Yii::$app->request->post());
+                        $valid = true;
+                        if ($valid) {
+                            $transaction = \Yii::$app->db->beginTransaction();
+                            try {
+                                foreach ($model as $modelAddress) {
+                                    $modelo = new RespuestaNumerica();
+                                    $modelo->valor_respuesta = $modelAddress->valor_respuesta;
+                                    $modelo->id_ece = $idece;
+                                    $modelo->id_preguntanumerica = $modelAddress->id_preguntanumerica;
+                                    if (!($flag = $modelo->save(false))) {
+                                        $transaction->rollBack();
+                                        break;
+                                    }
+                                }
+                                if ($flag) {
+                                    $transaction->commit();
+                                    $idpaso += 1;
+                                    return $this->redirect(['completarencuesta', 'id' => $id, 'idece' => $idece, 'idpaso' => $idpaso]);
+                                }
+                            } catch (Exception $e) {
+                                $transaction->rollBack();
+                            }
+                        }
+                    } else {
+                        return $this->render('completarencuesta', [
+                            'model' => $model,
+                            'content' => $this->renderPartial('encuestatemauno', ['model' => $model, 'model3' => $model3, 'model2' => $model2, 'id' => $id, 'idece' => $idece, 'idpaso' => $idpaso]),
+                        ]);
+                    }
+                }
+            }
+        } else {
             return $this->redirect(['encuestafinalizada']);
 
         }
 
     }
 
-    public function actionEncuestatemauno($id, $idece)
+
+
+    function actionEncuestatemauno($id, $idece)
     {
 
         $model = [new RespuestaNumerica];
@@ -269,7 +519,8 @@ class EncuestaConEstudianteController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionUpdate($id)
+    public
+    function actionUpdate($id)
     {
         $model = $this->findModel($id);
 
@@ -288,7 +539,8 @@ class EncuestaConEstudianteController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionDelete($id)
+    public
+    function actionDelete($id)
     {
         $this->findModel($id)->delete();
 
@@ -302,7 +554,8 @@ class EncuestaConEstudianteController extends Controller
      * @return EncuestaConEstudiante the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id)
+    protected
+    function findModel($id)
     {
         if (($model = EncuestaConEstudiante::findOne($id)) !== null) {
             return $model;

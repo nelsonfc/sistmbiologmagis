@@ -74,14 +74,7 @@ $title = 'Gracias por participar en el proceso de encuestas';
                                         echo $title->nombre_encuesta ?></h3>
                                 </div>
                                 <div class="panel-body">
-                                    <p align="justify">A form enhancement widget for Yii framework 2.0 allowing in-field
-                                        label
-                                        support.
-                                        This widget is a wrapper for the
-                                        <a href="https://github.com/andreapace/labelinplace" target="_blank">labelinplace
-                                            plugin</a>
-                                        and
-                                        is styled for Bootstrap 3.</p>
+                                    <p align="justify-center"><br>Esta encuesta esta incompleta.<br>Por favor terminar</p>
                                 </div>
                                 <div class="panel-footer">
                                     <a class="btn btn-default" title="View details &amp; demo"
