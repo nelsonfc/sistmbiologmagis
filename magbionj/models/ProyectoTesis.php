@@ -40,7 +40,7 @@ class ProyectoTesis extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['nombre_tesis', 'fecha_rendicion', 'nota_final', 'estudiante_id_estudiante', 'estado_tesis_id_estado'], 'required'],
+            [['nombre_tesis', 'fecha_rendicion','estudiante_id_estudiante', 'estado_tesis_id_estado'], 'required'],
             [['fecha_rendicion'], 'safe'],
             [['nota_final', 'estudiante_id_estudiante', 'estado_tesis_id_estado'], 'integer'],
             [['nombre_tesis'], 'string', 'max' => 150],
